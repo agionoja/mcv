@@ -16,7 +16,7 @@
     @apply border-border-color;
   }
   body {
-    @apply text-body-color;
+    @apply text-sm text-body-color;
   }
   h1 {
     @apply text-display-sm text-heading;
@@ -24,6 +24,10 @@
   h2,
   h3 {
     @apply text-display-xs text-sub-heading;
+  }
+
+  input {
+    @apply focus:outline-none focus:outline-primary-cta;
   }
 
   .nav-links.active {

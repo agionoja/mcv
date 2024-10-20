@@ -18,16 +18,14 @@ export function SideBar() {
   return (
     <header
       className={
-        "gap- w-full-[13.89%] flex h-full shrink-0 flex-col justify-between rounded-br-lg rounded-tr-lg border-r bg-white px-6 pb-8 pt-6 2xl:w-1/5"
+        "gap- w-full-[13.89%] flex min-h-full shrink-0 flex-col justify-between rounded-br-lg rounded-tr-lg border-r bg-white px-6 pb-8 pt-6 2xl:w-1/5"
       }
     >
       <div className={"flex flex-col gap-8"}>
-        <div className={"flex items-center gap-3 px-4"}>
-          <Link to={"/"}>
-            <img src={logo} width={48} height={48} alt="MCV logo" />
-          </Link>
+        <Link to={"/"} className={"flex items-center gap-3 px-4"}>
+          <img src={logo} width={48} height={48} alt="MCV logo" />
           <h2 className={"font-semibold text-primary-cta"}>MCV</h2>
-        </div>
+        </Link>
 
         <nav>
           <ul className={"flex flex-col gap-3"}>
