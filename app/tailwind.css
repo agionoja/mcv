@@ -2,11 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+/*html,*/
+/*body {*/
+/*  @apply bg-white dark:bg-gray-950;*/
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+/*  @media (prefers-color-scheme: dark) {*/
+/*    color-scheme: dark;*/
+/*  }*/
+/*}*/
+
+@layer base {
+  * {
+    @apply border-border-color;
+  }
+  body {
+    @apply text-body-color;
+  }
+  h1 {
+    @apply text-display-sm text-heading;
+  }
+  h2,
+  h3 {
+    @apply text-display-xs text-sub-heading;
+  }
+
+  .nav-links.active {
+    @apply text-primary-cta;
+  }
+}
+
+@layer components {
+  .nav-links {
+    @apply flex items-start gap-2.5 rounded-lg px-4 py-4 text-md font-medium hover:bg-border-color;
   }
 }
