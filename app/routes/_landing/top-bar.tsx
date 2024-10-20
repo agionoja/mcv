@@ -1,7 +1,6 @@
 import { Form, useNavigation } from "@remix-run/react";
 import { ROUTE_CONFIG } from "~/route.config";
-import { NotificationIcon, SearchIcon } from "~/components/icons";
-import avatar from "~/assets/images/avata.png";
+import { Avatar, NotificationIcon, SearchIcon } from "~/components/icons";
 import { useEffect, useRef } from "react";
 
 export function TopBar() {
@@ -15,13 +14,11 @@ export function TopBar() {
   }, [navigation.state]);
 
   return (
-    <div
-      className={
-        "w-ull flex h-24 justify-between rounded-xl bg-white px-8 py-7"
-      }
-    >
+    <div className={"flex h-24 w-full justify-between bg-white px-8 py-7"}>
       <Form
-        className={"flex w-[400px] items-center gap-2 border px-4 py-2.5"}
+        className={
+          "flex w-[400px] items-center gap-2 rounded-1 border px-4 py-2.5"
+        }
         action={ROUTE_CONFIG.SEARCH}
       >
         <button>
@@ -41,13 +38,7 @@ export function TopBar() {
             <NotificationIcon />
           </button>
         </Form>
-        <img
-          src={avatar}
-          height={40}
-          width={40}
-          className={"rounded-full"}
-          alt="user avata"
-        />
+        <Avatar />
       </div>
     </div>
   );

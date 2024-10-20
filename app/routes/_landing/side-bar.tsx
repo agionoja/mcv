@@ -22,12 +22,10 @@ export function SideBar() {
       }
     >
       <div className={"flex flex-col gap-8"}>
-        <div className={"flex items-center gap-3 px-4"}>
-          <Link to={"/"}>
-            <img src={logo} width={48} height={48} alt="MCV logo" />
-          </Link>
+        <Link to={"/"} className={"flex items-center gap-3 px-4"}>
+          <img src={logo} width={48} height={48} alt="MCV logo" />
           <h2 className={"font-semibold text-primary-cta"}>MCV</h2>
-        </div>
+        </Link>
 
         <nav>
           <ul className={"flex flex-col gap-3"}>
