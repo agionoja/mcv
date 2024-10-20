@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { IconProps } from "~/components/icons";
 
-type FileTypes = "pdf" | "jpeg" | "png" | "svg" | "webp" | "svg+xml";
+type FileTypes =
+  | "image/jpeg"
+  | "image/png"
+  | "image/webp"
+  | "image/svg+xml"
+  | "application/pdf"
+  | "image/*"
+  | "*/*";
 type Size = { mb: number } | { kb: number };
 type Position = "left" | "center" | "right";
 
@@ -52,7 +59,7 @@ export function FilePicker({
     const fileArray = Array.from(newFiles);
 
     const validFiles = fileArray.filter((file) => {
-      const format = file.type.split("/")[1] as FileTypes; // Extract file format
+      const format = file.type as FileTypes; // Extract file format
 
       const isValidType = fileTypes ? fileTypes.includes(format) : true; // Check file type
       const isValidSize = maxSize ? file.size <= totalSize : true; // Check file size
@@ -113,8 +120,8 @@ export function FilePicker({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`flex w-fit cursor-pointer items-center justify-center gap-4 border-2 border-dashed p-4 transition-all ${
-          isDragging ? "border-blue-500" : "border-gray-300"
+        className={`flex w-fit cursor-pointer items-center justify-center gap-4 rounded-lg border-2 border-dashed p-4 transition-all ${
+          isDragging ? "border-primary-cta" : "border-gray-300"
         } ${position === "left" ? "mr-auto" : position === "right" ? "ml-auto" : "mx-auto"}`}
       >
         {files.length ? (
@@ -125,9 +132,9 @@ export function FilePicker({
             alt={files[0].name}
           />
         ) : typeof Icon === "string" ? (
-          <img src={Icon} width={48} height={48} alt="icon" />
+          <img src={Icon} width={58} height={58} alt="icon" />
         ) : (
-          <Icon width={81} height={81} fill={"#5D6679"} />
+          <Icon width={58} height={58} fill={"#d1d5db"} />
         )}
 
         <div>
@@ -142,6 +149,7 @@ export function FilePicker({
           onChange={handleInputChange}
           hidden
           aria-label={"Select file"}
+          accept={fileTypes?.join(",")}
           {...inputProps}
         />
       </label>

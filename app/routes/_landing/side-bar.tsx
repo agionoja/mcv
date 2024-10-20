@@ -18,7 +18,7 @@ export function SideBar() {
   return (
     <header
       className={
-        "gap- w-full-[13.89%] flex h-full shrink-0 flex-col justify-between rounded-br-lg rounded-tr-lg border-r bg-white px-6 pb-8 pt-6 2xl:w-1/5"
+        "gap- w-full-[13.89%] flex min-h-full shrink-0 flex-col justify-between rounded-br-lg rounded-tr-lg border-r bg-white px-6 pb-8 pt-6 2xl:w-1/5"
       }
     >
       <div className={"flex flex-col gap-8"}>

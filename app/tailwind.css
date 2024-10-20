@@ -26,6 +26,10 @@
     @apply text-display-xs text-sub-heading;
   }
 
+  input {
+    @apply focus:outline-none focus:outline-primary-cta;
+  }
+
   .nav-links.active {
     @apply text-primary-cta;
   }
