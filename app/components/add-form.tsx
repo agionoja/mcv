@@ -1,7 +1,8 @@
-import { Form, FormProps, Link } from "@remix-run/react";
+import { Form, FormProps, Link, useNavigation } from "@remix-run/react";
 import React from "react";
 import { FilePicker, FilePickerProps } from "~/components/file-picker";
 import { ROUTE_CONFIG } from "~/route.config";
+import { Input } from "~/components/Input";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -10,13 +11,19 @@ type Label = {
   inputProps: InputProps;
 };
 
+type PositionX = {
+  left: number;
+  right: number;
+};
+
 interface Props {
   formProps?: FormProps;
   formLabel: string;
-  addBtnLabel: string;
+  addBtnLabel: { default: string; submitting: string };
   cancelRoute: ROUTE_CONFIG;
   label: Label[];
   filePickerProps?: FilePickerProps;
+  positionX?: PositionX;
 }
 
 export function AddForm({
@@ -27,6 +34,9 @@ export function AddForm({
   label,
   ...props
 }: Props) {
+  const navigation = useNavigation();
+  const state = navigation.state;
+
   return (
     <Form
       className={
@@ -43,14 +53,7 @@ export function AddForm({
             <li key={i}>
               <label className={"flex justify-between text-md font-medium"}>
                 <span>{label}</span>
-                <input
-                  className={
-                    "w-[17.0625rem] rounded-lg border px-3.5 py-2.5 transition duration-200"
-                  }
-                  type="text"
-                  required={true}
-                  {...inputProps}
-                />
+                <Input type="text" required={true} {...inputProps} />
               </label>
             </li>
           ))}
@@ -68,7 +71,9 @@ export function AddForm({
             className={"rounded-1 bg-primary-cta px-4 py-2.5 text-white"}
             type={"submit"}
           >
-            {addBtnLabel}
+            {state === "submitting"
+              ? addBtnLabel.submitting
+              : addBtnLabel.default}
           </button>
         </div>
       </div>

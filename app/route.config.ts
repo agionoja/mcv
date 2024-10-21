@@ -1,8 +1,8 @@
 export enum ROUTE_CONFIG {
-  LOGIN = "/auth/login",
+  LOGIN = "/login",
   LOGOUT = "/logout",
-  FORGOT_PASSWORD = "/auth/forgot-password",
-  RESET_PASSWORD = "/auth/reset-Password",
+  FORGOT_PASSWORD = "/forgot-password",
+  RESET_PASSWORD = "/reset-Password",
   DASHBOARD = "/dashboard",
   PRODUCT_INFO = "/product-info",
   REPORTS = "/reports",

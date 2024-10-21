@@ -27,6 +27,7 @@ export default {
         heading: "#383E49",
         "sub-heading": "#5D6679",
         "body-color": "#858D9D",
+        "modal-clr": "rgba(208,211,217,0.3)",
       },
 
       fontSize: {

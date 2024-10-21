@@ -2,6 +2,7 @@ import { Form, useNavigation } from "@remix-run/react";
 import { ROUTE_CONFIG } from "~/route.config";
 import { Avatar, NotificationIcon, SearchIcon } from "~/components/icons";
 import { useEffect, useRef } from "react";
+import { Input } from "~/components/Input";
 
 export function TopBar() {
   const navigation = useNavigation();
@@ -15,21 +16,20 @@ export function TopBar() {
 
   return (
     <div className={"flex h-24 w-full justify-between bg-white px-8 py-7"}>
-      <Form
-        className={
-          "flex w-[400px] items-center gap-2 rounded-1 border px-4 py-2.5"
-        }
-        action={ROUTE_CONFIG.SEARCH}
-      >
-        <button>
-          <SearchIcon />
-        </button>
-        <input
+      <Form className={"relative w-[400px]"} action={ROUTE_CONFIG.SEARCH}>
+        <label className={"sr-only"} htmlFor={"search"}>
+          Search
+        </label>
+        <Input
+          id={"search"}
           placeholder={"Search product, supplier, order"}
-          className={"w-full focus:outline-none"}
+          className={"h-full w-full py-2.5 pl-12"}
           type="search"
           aria-label={"search"}
         />
+        <button className={"absolute left-4 top-1/2 -translate-y-1/2"}>
+          <SearchIcon />
+        </button>
       </Form>
 
       <div className={"flex items-center gap-6"}>

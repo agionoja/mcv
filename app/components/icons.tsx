@@ -476,7 +476,7 @@ export function NotificationIcon({ ...props }: IconProps) {
   );
 }
 
-export function SuppliersIcon({ ...props }: IconProps) {
+export function UserIcon({ ...props }: IconProps) {
   return (
     <svg
       width="24"
