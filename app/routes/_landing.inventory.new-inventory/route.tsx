@@ -61,7 +61,7 @@ export default function NewInventory() {
             {
               label: "Buying Price",
               inputProps: {
-                type: "text",
+                type: "number",
                 name: PRODUCT.BUYING_PRICE,
                 placeholder: "Enter buying price",
               },
@@ -69,7 +69,7 @@ export default function NewInventory() {
             {
               label: "Quantity",
               inputProps: {
-                type: "text",
+                type: "number",
                 name: PRODUCT.QUANTITY,
                 placeholder: "Enter product quantity",
               },
@@ -85,7 +85,7 @@ export default function NewInventory() {
             {
               label: "Expiry Date",
               inputProps: {
-                type: "text",
+                type: "date",
                 name: PRODUCT.EXPIRY_DATE,
                 placeholder: "Enter expiry date",
               },
@@ -93,7 +93,7 @@ export default function NewInventory() {
             {
               label: "Threshold Value",
               inputProps: {
-                type: "text",
+                type: "number",
                 name: PRODUCT.THRESHOLD_VALUE,
                 placeholder: "Enter threshold value",
               },
