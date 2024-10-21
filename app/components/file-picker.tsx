@@ -59,10 +59,15 @@ export function FilePicker({
     const fileArray = Array.from(newFiles);
 
     const validFiles = fileArray.filter((file) => {
-      const format = file.type as FileTypes; // Extract file format
+      const format = file.type as FileTypes;
 
-      const isValidType = fileTypes ? fileTypes.includes(format) : true; // Check file type
-      const isValidSize = maxSize ? file.size <= totalSize : true; // Check file size
+      const isValidType = fileTypes
+        ? fileTypes.includes("*/*") ||
+          fileTypes.includes("image/*") ||
+          fileTypes.includes(format)
+        : true;
+
+      const isValidSize = maxSize ? file.size <= totalSize : true;
 
       if (!isValidType) {
         showError(`Invalid file type: ${file.type}`);

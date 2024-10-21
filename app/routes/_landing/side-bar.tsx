@@ -10,7 +10,7 @@ import {
   OrderIcon,
   ReportIcon,
   SettingsIcon,
-  SuppliersIcon,
+  UserIcon,
 } from "~/components/icons";
 import React from "react";
 
@@ -18,7 +18,7 @@ export function SideBar() {
   return (
     <header
       className={
-        "gap- w-full-[13.89%] flex min-h-full shrink-0 flex-col justify-between rounded-br-lg rounded-tr-lg border-r bg-white px-6 pb-8 pt-6 2xl:w-1/5"
+        "gap- w-full-[13.89%] flex h-[60rem] shrink-0 flex-col justify-between rounded-br-lg rounded-tr-lg border-r bg-white px-6 pb-8 pt-6 2xl:w-1/5"
       }
     >
       <div className={"flex flex-col gap-8"}>
@@ -53,11 +53,7 @@ export function SideBar() {
               )}
             </li>
             <li>
-              {RenderNavLink(
-                ROUTE_CONFIG.SUPPLIERS,
-                "Suppliers",
-                SuppliersIcon,
-              )}
+              {RenderNavLink(ROUTE_CONFIG.SUPPLIERS, "Suppliers", UserIcon)}
             </li>
             <li>{RenderNavLink(ROUTE_CONFIG.ORDERS, "Orders", OrderIcon)}</li>
             <li>
@@ -90,12 +86,19 @@ function RenderNavLink(
   const primaryCta = "#1570EF";
   const location = useLocation();
 
-  return (
-    <NavLink
-      prefetch={to === ROUTE_CONFIG.LOGOUT ? "none" : "intent"}
-      className={"nav-links"}
-      to={to}
-    >
+  return to === ROUTE_CONFIG.LOGOUT ? (
+    <a className={"nav-links"} href={to}>
+      <IconComponent
+        {...{
+          [activeStyleProp]: location.pathname.includes(to)
+            ? primaryCta
+            : undefined,
+        }}
+      />
+      <span>{label}</span>
+    </a>
+  ) : (
+    <NavLink prefetch={"intent"} className={"nav-links"} to={to}>
       <IconComponent
         {...{
           [activeStyleProp]: location.pathname.includes(to)

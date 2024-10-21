@@ -6,9 +6,9 @@ export default function Landing() {
   return (
     <div className={"flex min-h-screen w-full bg-border-color"}>
       <SideBar />
-      <div className={"w-[86.11%] 2xl:w-[80%]"}>
+      <div className={"h-full w-[86.11%] 2xl:w-[80%]"}>
         <TopBar />
-        <div className="px-8 py-7">
+        <div className="h-full w-full px-8 py-7">
           <Outlet />
         </div>
       </div>
