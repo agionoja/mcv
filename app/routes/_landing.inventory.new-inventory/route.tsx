@@ -1,8 +1,8 @@
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
+import { ActionFunction, json, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { GalleryIcon } from "~/components/icons";
 import { ROUTE_CONFIG } from "~/route.config";
-import { Modal } from "~/components/Modal";
+import { Modal } from "~/components/modal";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,7 +13,11 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  return Object.fromEntries(formData);
+  const newInventoryData = Object.fromEntries(formData);
+
+  console.log({ newInventoryData });
+
+  return json({ newInventoryData });
 };
 
 enum PRODUCT {
@@ -33,9 +37,18 @@ export default function NewInventory() {
     <>
       <Modal>
         <AddForm
-          label={[
+          showFilePicker={true}
+          formProps={{ method: "POST", encType: "multipart/form-data" }}
+          addBtnLabel={{
+            default: "Add Product",
+            submitting: "Adding Product...",
+          }}
+          formLabel={"New Product"}
+          cancelRoute={ROUTE_CONFIG.INVENTORY}
+          control={[
             {
               label: "Product Name",
+              type: "input",
               inputProps: {
                 type: "text",
                 name: PRODUCT.NAME,
@@ -44,6 +57,7 @@ export default function NewInventory() {
             },
             {
               label: "Product ID",
+              type: "input",
               inputProps: {
                 type: "text",
                 name: PRODUCT.ID,
@@ -52,14 +66,17 @@ export default function NewInventory() {
             },
             {
               label: "Category",
-              inputProps: {
-                type: "text",
-                name: PRODUCT.CATEGORY,
-                placeholder: "Select product category", // TODO: Implement select here
-              },
+              type: "select",
+              name: PRODUCT.CATEGORY,
+              required: true,
+              options: [
+                { value: "electronics", label: "Electronics" },
+                { value: "apparel", label: "Apparel" },
+              ],
             },
             {
               label: "Buying Price",
+              type: "input",
               inputProps: {
                 type: "number",
                 name: PRODUCT.BUYING_PRICE,
@@ -68,6 +85,7 @@ export default function NewInventory() {
             },
             {
               label: "Quantity",
+              type: "input",
               inputProps: {
                 type: "number",
                 name: PRODUCT.QUANTITY,
@@ -76,6 +94,7 @@ export default function NewInventory() {
             },
             {
               label: "Unit",
+              type: "input",
               inputProps: {
                 type: "text",
                 name: PRODUCT.UNIT,
@@ -83,19 +102,21 @@ export default function NewInventory() {
               },
             },
             {
-              label: "Expiry Date",
-              inputProps: {
-                type: "date",
-                name: PRODUCT.EXPIRY_DATE,
-                placeholder: "Enter expiry date",
-              },
-            },
-            {
               label: "Threshold Value",
+              type: "input",
               inputProps: {
                 type: "number",
                 name: PRODUCT.THRESHOLD_VALUE,
                 placeholder: "Enter threshold value",
+              },
+            },
+            {
+              label: "Expiry Date",
+              type: "input",
+              inputProps: {
+                type: "date",
+                name: PRODUCT.EXPIRY_DATE,
+                placeholder: "Enter expiry date",
               },
             },
           ]}
@@ -110,13 +131,6 @@ export default function NewInventory() {
               required: true,
             },
           }}
-          formProps={{ method: "POST", encType: "multipart/form-data" }}
-          addBtnLabel={{
-            default: "Add Product",
-            submitting: "Adding Product...",
-          }}
-          formLabel={"New Product"}
-          cancelRoute={ROUTE_CONFIG.INVENTORY}
         ></AddForm>
       </Modal>
     </>

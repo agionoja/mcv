@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { IconProps } from "~/components/icons";
+import { GalleryIcon, IconProps } from "~/components/icons";
 
 type FileTypes =
   | "image/jpeg"
@@ -14,9 +14,10 @@ type Size = { mb: number } | { kb: number };
 type Position = "left" | "center" | "right";
 
 export type FilePickerProps = {
-  icon: React.FC<IconProps> | string;
-  inputProps: React.InputHTMLAttributes<HTMLInputElement>;
+  icon?: React.FC<IconProps> | string;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   onGetPreviewUrls?: (urls: string[] | []) => void;
+  clearPreview?: boolean;
   isMulti?: boolean;
   maxSize?: Size;
   position?: Position;
@@ -24,13 +25,14 @@ export type FilePickerProps = {
 };
 
 export function FilePicker({
-  icon: Icon,
+  icon: Icon = GalleryIcon,
   onGetPreviewUrls,
   fileTypes,
   maxSize = { mb: 1 },
   isMulti,
   position = "center",
   inputProps,
+  clearPreview,
 }: FilePickerProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -134,6 +136,7 @@ export function FilePicker({
             src={URL.createObjectURL(files[0])}
             width={48}
             height={48}
+            className={"h-12 w-12"}
             alt={files[0].name}
           />
         ) : typeof Icon === "string" ? (
