@@ -1,4 +1,16 @@
-import type { MetaFunction } from "@remix-run/node";
+import { ActionFunction, json, MetaFunction } from "@remix-run/node";
+import { AuthForm } from "~/components/auth-form";
+
+enum FORGOT_PASSWORD {
+  EMAIL = "email",
+}
+
+export const action: ActionFunction = async function ({ request }) {
+  const formData = await request.formData();
+  const email = formData.get(FORGOT_PASSWORD.EMAIL);
+
+  return json({ email });
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,5 +20,24 @@ export const meta: MetaFunction = () => {
 };
 
 export default function ForgotPassword() {
-  return <>forgot password</>;
+  return (
+    <AuthForm
+      inputLabel={[
+        {
+          label: "Email",
+          inputProps: {
+            type: "email",
+            name: FORGOT_PASSWORD.EMAIL,
+            required: true,
+            placeholder: "Enter your email",
+          },
+        },
+      ]}
+      headingText={"Enter your email"}
+      submitBtn={{
+        default: "Get reset link",
+        submitting: "Getting  reset link...",
+      }}
+    />
+  );
 }

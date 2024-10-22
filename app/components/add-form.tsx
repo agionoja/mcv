@@ -86,13 +86,13 @@ export function AddForm({
         <div className="ml-auto flex gap-4 font-medium">
           <Link
             to={cancelRoute}
-            className="rounded-1 border px-6 py-2.5 text-md"
+            className="rounded-4px border px-6 py-2.5 text-md"
           >
             Discard
           </Link>
 
           <button
-            className="rounded-1 bg-primary-cta px-4 py-2.5 text-white"
+            className="rounded-4px bg-primary-cta px-4 py-2.5 text-white"
             type="submit"
           >
             {state === "submitting"

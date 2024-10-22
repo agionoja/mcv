@@ -19,7 +19,7 @@
     @apply text-sm text-body-color;
   }
   h1 {
-    @apply text-display-sm text-heading;
+    @apply text-display-sm font-semibold text-heading;
   }
   h2,
   h3 {
@@ -51,22 +51,4 @@
   .nav-links {
     @apply flex items-start gap-2.5 rounded-lg px-4 py-4 text-md font-medium hover:bg-border-color;
   }
-}
-
-.select {
-  @apply relative inline-block;
-}
-
-.select.active,
-.select:focus {
-  @apply shadow-sm outline-transparent;
-}
-
-.select .optList {
-  @apply absolute left-0 top-full;
-}
-
-.select .optList.hidden {
-  visibility: hidden;
-  max-height: 0;
 }
