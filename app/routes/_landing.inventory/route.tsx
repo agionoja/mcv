@@ -10,8 +10,8 @@ export const meta: MetaFunction = () => {
 
 export default function Inventory() {
   return (
-    <>
+    <section>
       <Outlet />
-    </>
+    </section>
   );
 }

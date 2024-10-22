@@ -1,7 +1,7 @@
 import { ActionFunction, json, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { ROUTE_CONFIG } from "~/route.config";
-import { Modal } from "~/components/Modal";
+import { Modal } from "~/components/modal";
 
 enum ODER {
   PRODUCT_NAME = "product",
@@ -25,8 +25,6 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const orderData = Object.fromEntries(formData);
 
-  console.log(orderData);
-
   return json({ orderData });
 };
 
@@ -34,9 +32,14 @@ export default function NewOder() {
   return (
     <Modal>
       <AddForm
-        label={[
+        formProps={{ method: "POST", encType: "multipart/form-data" }}
+        addBtnLabel={{ default: "Add Order", submitting: "Adding Order..." }}
+        formLabel={"New Order"}
+        cancelRoute={ROUTE_CONFIG.INVENTORY}
+        control={[
           {
             label: "Product Name",
+            type: "input",
             inputProps: {
               type: "text",
               name: ODER.PRODUCT_NAME,
@@ -45,22 +48,26 @@ export default function NewOder() {
           },
           {
             label: "Product ID",
+            type: "input",
             inputProps: {
               type: "text",
               name: ODER.PRODUCT_ID,
-              placeholder: "Select product category", // TODO: Implement select here
+              placeholder: "Enter product ID",
             },
           },
           {
             label: "Category",
-            inputProps: {
-              type: "text",
-              name: ODER.CATEGORY,
-              placeholder: "Enter product category",
-            },
+            type: "select",
+            required: true,
+            name: ODER.CATEGORY,
+            options: [
+              { value: "newOder", label: "New Order" },
+              { value: "oldOder", label: "Old Order" },
+            ],
           },
           {
             label: "Order Value",
+            type: "input",
             inputProps: {
               type: "number",
               name: ODER.ORDER_VALUE,
@@ -70,6 +77,7 @@ export default function NewOder() {
           },
           {
             label: "Quantity",
+            type: "input",
             inputProps: {
               type: "number",
               name: ODER.QUANTITY,
@@ -79,6 +87,7 @@ export default function NewOder() {
           },
           {
             label: "Unit",
+            type: "input",
             inputProps: {
               type: "number",
               name: ODER.UNIT,
@@ -88,6 +97,7 @@ export default function NewOder() {
           },
           {
             label: "Buying Price",
+            type: "input",
             inputProps: {
               type: "number",
               name: ODER.BUYING_PRICE,
@@ -97,6 +107,7 @@ export default function NewOder() {
           },
           {
             label: "Date of delivery",
+            type: "input",
             inputProps: {
               type: "date",
               name: ODER.DATE_OF_DELIVERY,
@@ -104,10 +115,6 @@ export default function NewOder() {
             },
           },
         ]}
-        formProps={{ method: "POST", encType: "multipart/form-data" }}
-        addBtnLabel={{ default: "Add Order", submitting: "Adding Order..." }}
-        formLabel={"New Order"}
-        cancelRoute={ROUTE_CONFIG.INVENTORY}
       ></AddForm>
     </Modal>
   );

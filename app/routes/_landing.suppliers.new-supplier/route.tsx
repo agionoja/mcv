@@ -2,7 +2,7 @@ import { ActionFunction, json, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { UserIcon } from "~/components/icons";
 import { ROUTE_CONFIG } from "~/route.config";
-import { Modal } from "~/components/Modal";
+import { Modal } from "~/components/modal";
 
 enum SUPPLIER {
   NAME = "name",
@@ -26,6 +26,8 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const supplierData = Object.fromEntries(formData);
 
+  // console.log(supplierData);
+
   return json({ supplierData });
 };
 
@@ -33,9 +35,18 @@ export default function AddSuppliers() {
   return (
     <Modal>
       <AddForm
-        label={[
+        formProps={{ method: "POST", encType: "multipart/form-data" }}
+        addBtnLabel={{
+          submitting: "Adding Supplier...",
+          default: "Add Supplier",
+        }}
+        formLabel={"New Supplier"}
+        cancelRoute={ROUTE_CONFIG.SUPPLIERS}
+        showFilePicker={true}
+        control={[
           {
             label: "Supplier Name",
+            type: "input",
             inputProps: {
               type: "text",
               name: SUPPLIER.NAME,
@@ -43,23 +54,27 @@ export default function AddSuppliers() {
             },
           },
           {
-            label: "Product ID",
+            label: "Product Name",
+            type: "input",
             inputProps: {
               type: "text",
               name: SUPPLIER.PRODUCT,
-              placeholder: "Select product category", // TODO: Implement select here
+              placeholder: "Enter product name",
             },
           },
           {
             label: "Category",
-            inputProps: {
-              type: "text",
-              name: SUPPLIER.CATEGORY,
-              placeholder: "Enter product category",
-            },
+            type: "select",
+            required: true,
+            name: SUPPLIER.CATEGORY,
+            options: [
+              { value: "newOder", label: "New Order" },
+              { value: "oldOder", label: "Old Order" },
+            ],
           },
           {
             label: "Buying Price",
+            type: "input",
             inputProps: {
               type: "number",
               name: SUPPLIER.BUYING_PRICE,
@@ -68,6 +83,7 @@ export default function AddSuppliers() {
           },
           {
             label: "Contact Number",
+            type: "input",
             inputProps: {
               type: "tel",
               name: SUPPLIER.CONTACT_NUMBER,
@@ -76,6 +92,7 @@ export default function AddSuppliers() {
           },
           {
             label: "Type",
+            type: "input",
             inputProps: {
               type: "text",
               name: SUPPLIER.TAKING_RETURNS,
@@ -84,6 +101,7 @@ export default function AddSuppliers() {
           },
           {
             label: "",
+            type: "input",
             inputProps: {
               type: "text",
               name: SUPPLIER.NOT_TAKING_RETURNS,
@@ -102,13 +120,6 @@ export default function AddSuppliers() {
             required: true,
           },
         }}
-        formProps={{ method: "POST", encType: "multipart/form-data" }}
-        addBtnLabel={{
-          submitting: "Adding Supplier...",
-          default: "Add Supplier",
-        }}
-        formLabel={"New Supplier"}
-        cancelRoute={ROUTE_CONFIG.INVENTORY}
       ></AddForm>
     </Modal>
   );

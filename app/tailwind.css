@@ -19,7 +19,7 @@
     @apply text-sm text-body-color;
   }
   h1 {
-    @apply text-display-sm text-heading;
+    @apply text-display-sm font-semibold text-heading;
   }
   h2,
   h3 {

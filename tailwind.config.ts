@@ -39,8 +39,20 @@ export default {
         sm: ["0.875rem", "1.25rem"],
       },
 
+      height: {
+        240: "60rem",
+      },
+
+      width: {
+        90: "22.5rem",
+      },
+
       borderRadius: {
-        1: "0.25rem",
+        "4px": "0.25rem",
+      },
+
+      padding: {
+        "4.5": "1.125rem",
       },
     },
   },
