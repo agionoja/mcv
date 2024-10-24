@@ -87,16 +87,16 @@ export const overallInventory = {
   topProducts: {
     qty: 888,
     totalPrice: 25000,
-    period: new Date("2024-10-17").toISOString(),
+    period: new Date("2024-10-17"),
   },
   topSelling: {
     qty: 5,
     totalCost: 2500,
-    period: new Date("2024-10-17").toISOString(),
+    period: new Date("2024-10-17"),
   },
   lowStocks: {
     ordered: 12,
     notInStock: 2,
-    period: new Date("2024-10-17").toISOString(),
+    period: new Date("2024-10-17"),
   },
 };

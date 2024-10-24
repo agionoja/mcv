@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import { Table } from "~/components/table";
 import { products } from "~/mock";
@@ -8,6 +8,14 @@ export const meta: MetaFunction = () => {
     { title: "Inventory | MCV" },
     { name: "description", content: "MCV account: Inventory" },
   ];
+};
+
+export const loader: LoaderFunction = async function () {
+  return json(null, {
+    headers: {
+      "Cache-Control": `max-age=${60 * 60}`,
+    },
+  });
 };
 
 export default function Inventory() {
