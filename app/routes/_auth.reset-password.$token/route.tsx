@@ -11,7 +11,6 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async function ({ params }) {
   console.log(params);
-
   return redirect(ROUTE_CONFIG.LOGIN);
 };
 
