@@ -1,15 +1,21 @@
-import { ActionFunction, json, MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction, redirect } from "@remix-run/node";
 import { AuthForm } from "~/components/auth-form";
+import { ROUTE_CONFIG } from "~/route.config";
 
 enum FORGOT_PASSWORD {
   EMAIL = "email",
 }
 
 export const action: ActionFunction = async function ({ request }) {
-  const formData = await request.formData();
-  const email = formData.get(FORGOT_PASSWORD.EMAIL);
+  // const formData = await request.formData();
+  // const email = formData.get(FORGOT_PASSWORD.EMAIL);
 
-  return json({ email });
+  return redirect(
+    ROUTE_CONFIG.RESET_PASSWORD.replace(
+      ":token",
+      "make-sure-you-use-the-email-token-later",
+    ),
+  );
 };
 
 export const meta: MetaFunction = () => {

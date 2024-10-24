@@ -1,5 +1,7 @@
-import { ActionFunction, json, MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { AuthForm } from "~/components/auth-form";
+import { ROUTE_CONFIG } from "~/route.config";
+import { redirectWithSuccessToast } from "~/toast";
 
 enum LOGIN {
   PASSWORD = "password",
@@ -8,12 +10,13 @@ enum LOGIN {
 }
 
 export const action: ActionFunction = async function ({ request }) {
-  const loginFormData = await request.formData();
-  const loginData = Object.fromEntries(loginFormData);
+  // const loginFormData = await request.formData();
+  // const loginData = Object.fromEntries(loginFormData);
 
-  console.log({ email: loginData[LOGIN.EMAIL], loginData });
-
-  return json({ loginData });
+  return redirectWithSuccessToast({
+    redirectTo: ROUTE_CONFIG.DASHBOARD,
+    message: "Welcome Back!",
+  });
 };
 
 export const meta: MetaFunction = () => {
@@ -39,9 +42,10 @@ export default function Login() {
           inputProps: {
             type: "email",
             name: LOGIN.EMAIL,
-            placeholder: "Enter your password",
+            placeholder: "Enter your email",
             required: true,
-            // Todo: write an email regex here
+            // pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+            // title: "Please enter a valid email address",
           },
         },
         {
@@ -51,7 +55,9 @@ export default function Login() {
             name: LOGIN.PASSWORD,
             required: true,
             minLength: 8,
-            // Todo: write a password regex here
+            // pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
+            // title:
+            //   "Password must be at least 8 characters long and include uppercase, lowercase letters, and a number",
           },
         },
         {
@@ -62,6 +68,6 @@ export default function Login() {
           },
         },
       ]}
-    ></AuthForm>
+    />
   );
 }

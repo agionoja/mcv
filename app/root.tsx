@@ -4,11 +4,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import { ActionFunctionArgs, json, LinksFunction } from "@remix-run/node";
 import "./tailwind.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Bounce, ToastContainer } from "react-toastify";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { getFlashSession } from "~/toast";
+import { ReactNode, useEffect } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,7 +26,13 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export async function loader({ request }: ActionFunctionArgs) {
+  const { flash, headers } = await getFlashSession(request);
+
+  return json({ flash }, { headers });
+}
+
+export function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -51,5 +60,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { flash } = useLoaderData<typeof loader>();
+
+  useEffect(() => {
+    if (flash?.toast) {
+      toast(flash.toast.message, { type: flash.toast.type });
+    }
+  }, [flash?.toast]);
+
   return <Outlet />;
 }
