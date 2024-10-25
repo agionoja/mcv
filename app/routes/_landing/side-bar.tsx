@@ -1,10 +1,10 @@
-import logo from "~/assets/images/logo.png";
 import { Link, NavLink, useLocation } from "@remix-run/react";
 import { ROUTE_CONFIG } from "~/route.config";
 import {
   HomeIcon,
   IconProps,
   InventoryIcon,
+  LogoIcon,
   LogoutIcon,
   ManageStoreIcon,
   OrderIcon,
@@ -23,7 +23,7 @@ export function SideBar() {
     >
       <div className={"flex flex-col gap-8"}>
         <Link to={"/"} className={"flex items-center gap-3 px-4"}>
-          <img src={logo} width={48} height={48} alt="MCV logo" />
+          <LogoIcon width={58} height={58} />
           <h2 className={"text-sm font-semibold uppercase text-primary-cta"}>
             Moscord cosmetic venture
           </h2>

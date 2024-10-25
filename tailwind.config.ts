@@ -20,9 +20,9 @@ export default {
       colors: {
         "primary-cta": "#1570EF",
         "total-return": "#845EBC",
-        "total-products": "#DBA362",
-        "in-stock": "#12B76A",
-        "out-of-stock": "#F04438",
+        "neutral-clr": "#DBA362",
+        "ok-clr": "#12B76A",
+        "warning-clr": "#F04438",
         "border-color": "#F0F1F3",
         heading: "#383E49",
         "sub-heading": "#5D6679",
