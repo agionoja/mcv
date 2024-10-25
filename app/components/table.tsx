@@ -1,10 +1,10 @@
 import { HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 import { v4 } from "uuid";
 
-type ThProps = { isHeader?: true } & ThHTMLAttributes<HTMLTableCellElement>;
-type TdProps = TdHTMLAttributes<HTMLTableCellElement>;
-
-type TableCellProps = ThProps | TdProps;
+type TableCellProps = { isHeader?: true } & (
+  | ThHTMLAttributes<HTMLTableCellElement>
+  | TdHTMLAttributes<HTMLTableCellElement>
+);
 
 interface TableRowProps
   extends Omit<HTMLAttributes<HTMLTableRowElement>, "children"> {
@@ -94,9 +94,8 @@ function TableCaption({ tableCaption }: TableCaptionProps) {
   ) : null;
 }
 
-function TableCell({ children, ...props }: TableCellProps) {
-  if ("isHeader" in props) {
-    delete props.isHeader;
+function TableCell({ children, isHeader, ...props }: TableCellProps) {
+  if (isHeader) {
     return <th {...props}>{children}</th>;
   }
   return <td {...props}>{children}</td>;
