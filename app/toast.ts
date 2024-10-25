@@ -139,7 +139,7 @@ export function redirectWithInfoToast({
   });
 }
 
-export function redirectWithWarningToast({
+export function redirectWithWarning({
   redirectTo,
   message,
   init,

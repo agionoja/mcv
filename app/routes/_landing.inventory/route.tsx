@@ -81,7 +81,7 @@ export default function Inventory() {
             },
             {
               children: product.availability,
-              className: `${product.availability === "in-stock" ? "text-in-stock" : product.availability === "low-stock" ? "text-out-of-stock" : "text-total-products"}`,
+              className: `${product.availability === "in-stock" ? "text-ok-clr" : product.availability === "low-stock" ? "text-warning-clr" : "text-neutral-clr"}`,
             },
           ],
         }))}

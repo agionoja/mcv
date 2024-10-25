@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Link, useNavigation } from "@remix-run/react";
-import logo from "~/assets/images/logo.svg";
 import { Input } from "~/components/Input";
 import { ROUTE_CONFIG } from "~/route.config";
+import { LogoIcon } from "~/components/icons";
 
 type AuthFormProps = {
   inputLabel?: {
@@ -34,7 +34,7 @@ export function AuthForm({
   return (
     <div className={"flex w-90 flex-col gap-8"}>
       <div className={"flex w-full flex-col gap-6"}>
-        <img className={"mx-auto"} src={logo} width={48} height={48} alt="" />
+        <LogoIcon className={"mx-auto"} width={48} height={48} />
         <div className={"flex flex-col gap-3 text-center"}>
           <h1>{headingText}</h1>
           {message && <p>{message}</p>}
