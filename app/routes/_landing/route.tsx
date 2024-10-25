@@ -4,11 +4,13 @@ import { TopBar } from "~/routes/_landing/top-bar";
 
 export default function Landing() {
   return (
-    <div className={"flex h-240 w-full bg-border-color"}>
+    <div className="flex h-240 w-full bg-border-color">
       <SideBar />
-      <div className={"w-[86.11%] 2xl:w-[80%]"}>
+
+      <div className="flex w-[86.11%] flex-col overflow-hidden 2xl:w-[80%]">
         <TopBar />
-        <div className={"w-full px-8 py-7"}>
+
+        <div className="w-full flex-1 overflow-y-auto px-8 py-7">
           <Outlet />
         </div>
       </div>
