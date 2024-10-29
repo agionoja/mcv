@@ -1,6 +1,16 @@
 import { Outlet } from "@remix-run/react";
 import { SideBar } from "~/routes/_landing/side-bar";
 import { TopBar } from "~/routes/_landing/top-bar";
+import { LoaderFunction } from "@remix-run/node";
+import { userHasSession } from "~/session";
+import { redirectWithErrorToast } from "~/toast";
+import { ROUTES } from "~/routes";
+
+export const loader: LoaderFunction = async function ({ request }) {
+  return (await userHasSession({ headers: request.headers }))
+    ? null
+    : redirectWithErrorToast({ redirectTo: ROUTES.LOGIN, message: "Login" });
+};
 
 export default function Landing() {
   return (

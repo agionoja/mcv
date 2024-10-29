@@ -33,6 +33,10 @@ export async function getUserToken({ headers }: Pick<Request, "headers">) {
   return session.get(USER_SESSION_KEY);
 }
 
+export async function userHasSession({ headers }: Pick<Request, "headers">) {
+  return (await getTokenSession({ headers })).has(USER_SESSION_KEY);
+}
+
 export async function createUserSession({
   remember,
   token,

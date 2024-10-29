@@ -55,7 +55,7 @@ export default async function fetchClient<T>({
     return {
       error: {
         statusCode: 500,
-        message: "Network error or unexpected server response",
+        message: "Network error",
       },
       data: null,
     };
@@ -67,4 +67,5 @@ export enum END_POINT {
   LOGIN = "/auth/login",
   FORGOT_PASSWORD = "/auth/forgot-password",
   RESET_PASSWORD = "/auth/reset-password",
+  PRODUCT = "/product",
 }
