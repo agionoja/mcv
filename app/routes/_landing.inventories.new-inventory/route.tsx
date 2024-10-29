@@ -1,7 +1,7 @@
 import { ActionFunction, json, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { GalleryIcon } from "~/components/icons";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 import { Modal } from "~/components/modal";
 
 export const meta: MetaFunction = () => {
@@ -44,7 +44,7 @@ export default function NewInventory() {
             submitting: "Adding Product...",
           }}
           formLabel={"New Product"}
-          cancelRoute={ROUTE_CONFIG.INVENTORY}
+          cancelRoute={ROUTES.INVENTORIES}
           control={[
             {
               label: "Product Name",

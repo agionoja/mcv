@@ -1,13 +1,12 @@
-import React from "react";
 import { Form, Link, useNavigation } from "@remix-run/react";
-import { Input } from "~/components/Input";
-import { ROUTE_CONFIG } from "~/route.config";
+import { Input, InputProps } from "~/components/Input";
+import { ROUTES } from "~/routes";
 import { LogoIcon } from "~/components/icons";
 
 type AuthFormProps = {
   inputLabel?: {
     label: string;
-    inputProps: React.InputHTMLAttributes<HTMLInputElement>;
+    inputProps: InputProps;
   }[];
   headingText: string;
   type?: "login";
@@ -64,7 +63,7 @@ export function AuthForm({
             </label>
             <Link
               className={"text-sm font-medium text-primary-cta"}
-              to={ROUTE_CONFIG.FORGOT_PASSWORD}
+              to={ROUTES.FORGOT_PASSWORD}
             >
               Forgot password
             </Link>

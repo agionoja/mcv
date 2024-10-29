@@ -1,6 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import GeneralTable, { INDICATION } from "~/components/general-table";
+import TableWithPagination, {
+  INDICATION,
+} from "~/components/table-with-pagination";
 import { ORDER_STATUS, orders } from "~/mock";
 
 export const meta: MetaFunction = () => {
@@ -13,7 +15,7 @@ export const meta: MetaFunction = () => {
 export default function Orders() {
   return (
     <>
-      <GeneralTable
+      <TableWithPagination
         tableCaption={"Orders"}
         tHeadCellData={[
           "Products",
@@ -24,7 +26,8 @@ export default function Orders() {
           "Status",
         ]}
         tableBodyData={orders.map((order) => ({
-          cells: [
+          rowUrl: order.orderId.toString(),
+          rowCells: [
             { data: order.name },
             { data: `${order.orderValue}` },
             { data: order.quantity },

@@ -1,5 +1,5 @@
 import { Link, NavLink, useLocation } from "@remix-run/react";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 import {
   HomeIcon,
   IconProps,
@@ -32,35 +32,19 @@ export function SideBar() {
         <nav>
           <ul className={"flex flex-col gap-3"}>
             <li>
-              {RenderNavLink(
-                ROUTE_CONFIG.DASHBOARD,
-                "Dashboard",
-                HomeIcon,
-                "stroke",
-              )}
+              {RenderNavLink(ROUTES.DASHBOARD, "Dashboard", HomeIcon, "stroke")}
             </li>
             <li>
-              {RenderNavLink(
-                ROUTE_CONFIG.INVENTORY,
-                "Inventory",
-                InventoryIcon,
-              )}
+              {RenderNavLink(ROUTES.INVENTORIES, "Inventories", InventoryIcon)}
             </li>
             <li>
-              {RenderNavLink(
-                ROUTE_CONFIG.REPORTS,
-                "Reports",
-                ReportIcon,
-                "stroke",
-              )}
+              {RenderNavLink(ROUTES.REPORTS, "Reports", ReportIcon, "stroke")}
             </li>
-            <li>
-              {RenderNavLink(ROUTE_CONFIG.SUPPLIERS, "Suppliers", UserIcon)}
-            </li>
-            <li>{RenderNavLink(ROUTE_CONFIG.ORDERS, "Orders", OrderIcon)}</li>
+            <li>{RenderNavLink(ROUTES.SUPPLIERS, "Suppliers", UserIcon)}</li>
+            <li>{RenderNavLink(ROUTES.ORDERS, "Orders", OrderIcon)}</li>
             <li>
               {RenderNavLink(
-                ROUTE_CONFIG.MANAGE_STORE,
+                ROUTES.MANAGE_STORE,
                 "Manage Store",
                 ManageStoreIcon,
               )}
@@ -70,10 +54,8 @@ export function SideBar() {
       </div>
 
       <ul>
-        <li>
-          {RenderNavLink(ROUTE_CONFIG.SETTINGS, "Settings", SettingsIcon)}
-        </li>
-        <li>{RenderNavLink(ROUTE_CONFIG.LOGOUT, "Logout", LogoutIcon)}</li>
+        <li>{RenderNavLink(ROUTES.SETTINGS, "Settings", SettingsIcon)}</li>
+        <li>{RenderNavLink(ROUTES.LOGOUT, "Logout", LogoutIcon)}</li>
       </ul>
     </header>
   );
@@ -88,8 +70,8 @@ function RenderNavLink(
   const primaryCta = "#1570EF";
   const location = useLocation();
 
-  return to === ROUTE_CONFIG.LOGOUT ? (
-    <a className={"nav-links"} href={to}>
+  return to === ROUTES.LOGOUT ? (
+    <Link reloadDocument className={"nav-links"} to={to}>
       <IconComponent
         {...{
           [activeStyleProp]: location.pathname.includes(to)
@@ -98,7 +80,7 @@ function RenderNavLink(
         }}
       />
       <span>{label}</span>
-    </a>
+    </Link>
   ) : (
     <NavLink prefetch={"intent"} className={"nav-links"} to={to}>
       <IconComponent

@@ -1,6 +1,6 @@
 import { redirect } from "@remix-run/node";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 
 export function loader() {
-  return redirect(ROUTE_CONFIG.SETTINGS_SECURITY);
+  return redirect(ROUTES.SETTINGS_SECURITY);
 }

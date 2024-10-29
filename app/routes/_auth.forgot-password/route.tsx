@@ -1,21 +1,40 @@
-import { ActionFunction, MetaFunction, redirect } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { AuthForm } from "~/components/auth-form";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
+import fetchClient, { END_POINT } from "~/fetch-client";
+import { redirectWithErrorToast, redirectWithSuccessToast } from "~/toast";
+import { SuccessResponse } from "~/dto";
 
 enum FORGOT_PASSWORD {
   EMAIL = "email",
 }
 
 export const action: ActionFunction = async function ({ request }) {
-  // const formData = await request.formData();
-  // const email = formData.get(FORGOT_PASSWORD.EMAIL);
+  const formData = await request.formData();
+  const email = formData.get(FORGOT_PASSWORD.EMAIL);
 
-  return redirect(
-    ROUTE_CONFIG.RESET_PASSWORD.replace(
-      ":token",
-      "make-sure-you-use-the-email-token-later",
-    ),
-  );
+  const { data, error } = await fetchClient<SuccessResponse<{ data: null }>>({
+    endpoint: END_POINT.FORGOT_PASSWORD,
+    init: {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    },
+  });
+
+  if (error) {
+    return redirectWithErrorToast({
+      redirectTo: ROUTES.FORGOT_PASSWORD,
+      message: error.message,
+      init: {
+        status: error.statusCode,
+      },
+    });
+  }
+
+  return redirectWithSuccessToast({
+    redirectTo: ROUTES.RESET_PASSWORD,
+    message: data?.message,
+  });
 };
 
 export const meta: MetaFunction = () => {

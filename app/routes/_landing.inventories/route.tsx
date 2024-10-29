@@ -1,13 +1,15 @@
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import { Table } from "~/components/table";
-import { ORDER_STATUS, orders, products } from "~/mock";
-import GeneralTable, { INDICATION } from "~/components/general-table";
+import { products } from "~/mock";
+import TableWithPagination, {
+  INDICATION,
+} from "~/components/table-with-pagination";
+import { ROUTES } from "~/routes";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Inventory | MCV" },
-    { name: "description", content: "MCV account: Inventory" },
+    { title: "Inventories | MCV" },
+    { name: "description", content: "All Moscord Cosmetic Venture Supplier" },
   ];
 };
 
@@ -19,13 +21,14 @@ export const loader: LoaderFunction = async function () {
   });
 };
 
-export default function Inventory() {
+export default function Inventories() {
   return (
     <div className={"flex flex-col gap-8"}>
       <section className={"table-container bg-white px-4"}>
         <h2 className={"text-heading"}>Overall Inventory</h2>
       </section>
-      <GeneralTable
+      <Outlet />
+      <TableWithPagination
         tableCaption={"Products"}
         tHeadCellData={[
           "Products",
@@ -36,7 +39,8 @@ export default function Inventory() {
           "Availability",
         ]}
         tableBodyData={products.map((product) => ({
-          cells: [
+          rowUrl: ROUTES.INVENTORY.replace(":id", product.name),
+          rowCells: [
             { data: product.name, isHeader: true },
             { data: `${product.price}`, isHeader: undefined },
             { data: `${product.qty}` },
@@ -54,7 +58,6 @@ export default function Inventory() {
           ],
         }))}
       />
-      <Outlet />
     </div>
   );
 }

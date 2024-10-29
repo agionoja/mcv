@@ -1,6 +1,6 @@
 import { ActionFunction, json, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 import { Modal } from "~/components/modal";
 
 enum ODER {
@@ -35,7 +35,7 @@ export default function NewOder() {
         formProps={{ method: "POST", encType: "multipart/form-data" }}
         addBtnLabel={{ default: "Add Order", submitting: "Adding Order..." }}
         formLabel={"New Order"}
-        cancelRoute={ROUTE_CONFIG.INVENTORY}
+        cancelRoute={ROUTES.INVENTORIES}
         control={[
           {
             label: "Product Name",

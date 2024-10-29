@@ -1,5 +1,5 @@
 import { Form, useNavigation } from "@remix-run/react";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 import { Avatar, NotificationIcon, SearchIcon } from "~/components/icons";
 import { useEffect, useRef } from "react";
 import { Input } from "~/components/Input";
@@ -16,7 +16,7 @@ export function TopBar() {
 
   return (
     <div className={"flex h-24 w-full justify-between bg-white px-8 py-7"}>
-      <Form className={"relative w-[400px]"} action={ROUTE_CONFIG.SEARCH}>
+      <Form className={"relative w-[400px]"} action={ROUTES.SEARCH}>
         <label className={"sr-only"} htmlFor={"search"}>
           Search
         </label>

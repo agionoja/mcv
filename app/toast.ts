@@ -18,10 +18,10 @@ type FlashSessionValues = z.infer<typeof flashSessionValuesSchema>;
 type ToastMessage = z.infer<typeof toastMessageSchema>;
 
 // Common type for redirect functions
-interface RedirectArgs {
+type RedirectArgs = {
   redirectTo: string;
   init?: ResponseInit;
-}
+};
 
 // Common type for functions with a flash message
 interface RedirectWithFlashArgs extends RedirectArgs {

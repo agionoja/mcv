@@ -1,7 +1,7 @@
 import { ActionFunction, json, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { UserIcon } from "~/components/icons";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 import { Modal } from "~/components/modal";
 
 enum SUPPLIER {
@@ -41,7 +41,7 @@ export default function AddSuppliers() {
           default: "Add Supplier",
         }}
         formLabel={"New Supplier"}
-        cancelRoute={ROUTE_CONFIG.SUPPLIERS}
+        cancelRoute={ROUTES.SUPPLIERS}
         showFilePicker={true}
         control={[
           {

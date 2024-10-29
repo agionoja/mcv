@@ -272,3 +272,38 @@ export const suppliers = [
     email: "henry.lewis@example.com",
   },
 ];
+
+export const bestSellingProducts = [
+  {
+    product: "Tomato",
+    productId: 23567,
+    category: "Vegetable",
+    remainingQuantity: "225 kg",
+    turnover: "₹17,000",
+    increaseBy: "2.3%",
+  },
+  {
+    product: "Onion",
+    productId: 25831,
+    category: "Vegetable",
+    remainingQuantity: "200 kg",
+    turnover: "₹12,000",
+    increaseBy: "1.3%",
+  },
+  {
+    product: "Maggi",
+    productId: 56841,
+    category: "Instant Food",
+    remainingQuantity: "200 Packet",
+    turnover: "₹10,000",
+    increaseBy: "1.3%",
+  },
+  {
+    product: "Surf Excel",
+    productId: 23567,
+    category: "Household",
+    remainingQuantity: "125 Packet",
+    turnover: "₹9,000",
+    increaseBy: "1%",
+  },
+];

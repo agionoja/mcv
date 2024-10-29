@@ -34,7 +34,7 @@ type TableContainerProps = {
   tableContainer?: HTMLAttributes<HTMLDivElement>;
 };
 
-type TableProps = Omit<HTMLAttributes<HTMLTableElement>, "children"> &
+export type TableProps = Omit<HTMLAttributes<HTMLTableElement>, "children"> &
   TableBodyProps &
   TableFooterProps &
   TableHeaderProps &

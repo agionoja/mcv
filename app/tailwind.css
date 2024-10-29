@@ -51,29 +51,6 @@
     @apply border-collapse border-border-color;
   }
 
-  .regular-table tbody tr:not(:last-child),
-  .regular-table thead tr {
-    @apply border-b border-border-color;
-  }
-
-  .regular-table th,
-  .regular-table td,
-  caption {
-    @apply px-4 py-3.5 text-left;
-  }
-
-  .regular-table thead th {
-    @apply text-gray-400;
-  }
-
-  .regular-table caption {
-    @apply mb-4;
-  }
-
-  .regular-table caption {
-    @apply text-left text-lg font-medium text-heading;
-  }
-
   .nav-links.active {
     @apply text-primary-cta;
   }
@@ -82,13 +59,5 @@
 @layer components {
   .nav-links {
     @apply flex items-start gap-2.5 rounded-lg px-4 py-4 text-md font-medium hover:bg-border-color;
-  }
-
-  .regular-table {
-    @apply w-full table-fixed bg-white;
-  }
-
-  .table-container {
-    @apply rounded-lg pb-3.5 pt-5;
   }
 }

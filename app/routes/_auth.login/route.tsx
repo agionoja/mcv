@@ -1,7 +1,10 @@
 import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { AuthForm } from "~/components/auth-form";
-import { ROUTE_CONFIG } from "~/route.config";
-import { redirectWithSuccessToast } from "~/toast";
+import { ROUTES } from "~/routes";
+import { redirectWithErrorToast } from "~/toast";
+import fetchClient, { END_POINT } from "~/fetch-client";
+import { createUserSession } from "~/session";
+import { User } from "~/dto";
 
 enum LOGIN {
   PASSWORD = "password",
@@ -10,12 +13,32 @@ enum LOGIN {
 }
 
 export const action: ActionFunction = async function ({ request }) {
-  // const loginFormData = await request.formData();
-  // const loginData = Object.fromEntries(loginFormData);
+  const formData = await request.formData();
+  const password = formData.get(LOGIN.PASSWORD);
+  const email = formData.get(LOGIN.EMAIL);
+  const remember = formData.get(LOGIN.REMEMBER);
 
-  return redirectWithSuccessToast({
-    redirectTo: ROUTE_CONFIG.DASHBOARD,
+  const { data, error } = await fetchClient<User>({
+    endpoint: END_POINT.LOGIN,
+    init: {
+      method: "POST",
+      body: JSON.stringify({ password, email }),
+    },
+  });
+
+  if (error) {
+    return redirectWithErrorToast({
+      redirectTo: ROUTES.LOGIN,
+      message: error.message,
+    });
+  }
+
+  return createUserSession({
+    redirectTo: ROUTES.DASHBOARD,
+    remember: remember === "on",
+    request,
     message: "Welcome Back!",
+    token: data.data.token,
   });
 };
 
@@ -54,7 +77,7 @@ export default function Login() {
             type: "password",
             name: LOGIN.PASSWORD,
             required: true,
-            minLength: 8,
+            minLength: 6,
             // pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
             // title:
             //   "Password must be at least 8 characters long and include uppercase, lowercase letters, and a number",

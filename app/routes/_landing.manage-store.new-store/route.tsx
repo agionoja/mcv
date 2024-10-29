@@ -1,7 +1,7 @@
 import { ActionFunction, json, MetaFunction } from "@remix-run/node";
 import { Modal } from "~/components/modal";
 import { AddForm } from "~/components/add-form";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 
 enum STORE {
   NAME = "name",
@@ -29,7 +29,7 @@ export default function NewStore() {
         formLabel={"New Store"}
         formProps={{ encType: "application/x-www-form-urlencoded" }}
         addBtnLabel={{ default: "Add Store", submitting: "Adding Store.." }}
-        cancelRoute={ROUTE_CONFIG.MANAGE_STORE}
+        cancelRoute={ROUTES.MANAGE_STORE}
         showFilePicker={true}
         filePickerProps={{ fileTypes: ["image/*"] }}
         control={[

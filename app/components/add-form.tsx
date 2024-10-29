@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 import { Form, FormProps, Link, useNavigation } from "@remix-run/react";
 import React, { useEffect, useRef } from "react";
 import { FilePicker, FilePickerProps } from "~/components/file-picker";
-import { ROUTE_CONFIG } from "~/route.config";
+import { ROUTES } from "~/routes";
 import { Input } from "~/components/Input";
 import { Select, SelectProps as ReactSelectProps } from "~/components/select";
 
@@ -30,7 +30,7 @@ type Props = {
   formProps?: FormProps;
   formLabel: string;
   addBtnLabel: { default: string; submitting: string };
-  cancelRoute: ROUTE_CONFIG;
+  cancelRoute: ROUTES;
   filePickerProps?: FilePickerProps;
   showFilePicker?: boolean;
   positionX?: PositionX;
