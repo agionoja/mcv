@@ -20,7 +20,7 @@ export enum ROUTES {
   SEARCH = "/search",
   INVENTORIES = "/inventories",
   INVENTORY = "/inventories/:id",
-  NEW_INVENTORY = "/inventory/new-inventory",
+  NEW_INVENTORY = "/inventories/new-inventory",
   INVENTORY_OVERVIEW = "/inventory/overview",
   INVENTORY_HISTORY = "/inventory/history",
   INVENTORY_ADJUSTMENTS = "/inventory/adjustments",

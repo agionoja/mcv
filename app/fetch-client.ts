@@ -24,14 +24,13 @@ export default async function fetchClient<T>({
   // console.log(`${API}${endpoint}`);
   try {
     const response = await fetch(`${API}${endpoint}`, {
-      ...init,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
         ...init?.headers,
       },
+      ...init,
     });
-
     if (!response.ok) {
       // Attempt to extract a custom error message from JSON, if provided
       const errorData = await response.json().catch(() => null);

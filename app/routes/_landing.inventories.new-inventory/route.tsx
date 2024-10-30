@@ -1,8 +1,11 @@
-import { ActionFunction, json, MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { GalleryIcon } from "~/components/icons";
 import { ROUTES } from "~/routes";
 import { Modal } from "~/components/modal";
+import fetchClient, { END_POINT } from "~/fetch-client";
+import { redirectWithErrorToast, redirectWithSuccessToast } from "~/toast";
+import { SuccessResponse } from "~/dto";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,8 +19,28 @@ export const action: ActionFunction = async ({ request }) => {
   const newInventoryData = Object.fromEntries(formData);
 
   console.log({ newInventoryData });
+  const { error, data } = await fetchClient<SuccessResponse<{ data: null }>>({
+    endpoint: END_POINT.PRODUCT,
+    init: {
+      method: "POST",
+      body: JSON.stringify(newInventoryData),
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  });
 
-  return json({ newInventoryData });
+  if (error)
+    return redirectWithErrorToast({
+      redirectTo: ROUTES.NEW_INVENTORY,
+      message: error.message,
+    });
+
+  console.log(data);
+  return redirectWithSuccessToast({
+    redirectTo: ROUTES.INVENTORIES,
+    message: "Product added successfully!",
+  });
 };
 
 enum PRODUCT {
@@ -29,7 +52,7 @@ enum PRODUCT {
   UNIT = "unit",
   EXPIRY_DATE = "expiryDate",
   THRESHOLD_VALUE = "thresholdValue",
-  PHOTO = "photo",
+  IMAGE = "image",
 }
 
 export default function NewInventory() {
@@ -55,22 +78,22 @@ export default function NewInventory() {
                 placeholder: "Enter product name",
               },
             },
-            {
-              label: "Product ID",
-              type: "input",
-              inputProps: {
-                type: "text",
-                name: PRODUCT.ID,
-                placeholder: "Enter product ID",
-              },
-            },
+            // {
+            //   label: "Product ID",
+            //   type: "input",
+            //   inputProps: {
+            //     type: "text",
+            //     name: PRODUCT.ID,
+            //     placeholder: "Enter product ID",
+            //   },
+            // },
             {
               label: "Category",
               type: "select",
               name: PRODUCT.CATEGORY,
               required: true,
               options: [
-                { value: "electronics", label: "Electronics" },
+                { value: "Electronics", label: "Electronics" },
                 { value: "apparel", label: "Apparel" },
               ],
             },
@@ -126,7 +149,7 @@ export default function NewInventory() {
             maxSize: { mb: 1000 },
             fileTypes: ["image/*"],
             inputProps: {
-              name: PRODUCT.PHOTO,
+              name: PRODUCT.IMAGE,
               "aria-label": "Add product image",
               required: true,
             },
