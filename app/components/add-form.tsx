@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { Form, FormProps, Link, useNavigation } from "@remix-run/react";
-import React, { useEffect, useRef } from "react";
+import React, { forwardRef } from "react";
 import { FilePicker, FilePickerProps } from "~/components/file-picker";
 import { ROUTES } from "~/routes";
 import { Input } from "~/components/Input";
@@ -32,55 +32,41 @@ type Props = {
   addBtnLabel: { default: string; submitting: string };
   cancelRoute: ROUTES;
   filePickerProps?: FilePickerProps;
-  showFilePicker?: boolean;
   positionX?: PositionX;
   control: Control[];
 };
 
-export function AddForm({
-  formLabel,
-  addBtnLabel,
-  cancelRoute,
-  filePickerProps,
-  showFilePicker = false,
-  control,
-  ...props
-}: Props) {
+// Specify the ref type (HTMLFormElement) and props type (Props) with forwardRef
+export const AddForm = forwardRef<HTMLFormElement, Props>(function AddForm(
+  { formLabel, addBtnLabel, cancelRoute, filePickerProps, control, ...props },
+  ref,
+) {
   const navigation = useNavigation();
-  const formRef = useRef<HTMLFormElement>(null);
   const state = navigation.state;
-
-  useEffect(() => {
-    if (state !== "submitting") {
-      formRef?.current?.reset();
-    }
-  }, [state]);
 
   return (
     <Form
-      ref={formRef}
+      ref={ref}
       className="flex w-[31.25rem] flex-col justify-center gap-6 rounded-lg bg-white px-8 py-7"
       {...props.formProps}
     >
       <h2 className="text-xl font-medium">{formLabel}</h2>
 
       <div className="flex flex-col gap-8">
-        {showFilePicker && <FilePicker {...filePickerProps} />}
+        {filePickerProps && <FilePicker {...filePickerProps} />}
         <ul className="flex flex-col gap-4">
-          {control.map((el) => {
-            return (
-              <li key={v4()}>
-                <label className="flex justify-between gap-2 text-md font-medium">
-                  <span>{el.label}</span>
-                  {el.type === "input" ? (
-                    <Input required {...el.inputProps} />
-                  ) : (
-                    <Select {...el} />
-                  )}
-                </label>
-              </li>
-            );
-          })}
+          {control.map((el, index) => (
+            <li key={index}>
+              <label className="flex justify-between gap-2 text-md font-medium">
+                <span>{el.label}</span>
+                {el.type === "input" ? (
+                  <Input required {...el.inputProps} />
+                ) : (
+                  <Select {...el} />
+                )}
+              </label>
+            </li>
+          ))}
         </ul>
 
         <div className="ml-auto flex gap-4 font-medium">
@@ -103,4 +89,4 @@ export function AddForm({
       </div>
     </Form>
   );
-}
+});

@@ -1,10 +1,11 @@
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Outlet } from "@remix-run/react";
+import { MetaFunction } from "@remix-run/node";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { products } from "~/mock";
 import TableWithPagination, {
   INDICATION,
 } from "~/components/table-with-pagination";
 import { ROUTES } from "~/routes";
+import fetchClient, { END_POINT } from "~/fetch-client";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,15 +14,23 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader: LoaderFunction = async function () {
-  return json(null, {
-    headers: {
-      "Cache-Control": `max-age=${60 * 60}`,
+export async function loader() {
+  const products = fetchClient({
+    endpoint: END_POINT.PRODUCT_FIND_ALL,
+    init: {
+      method: "GET",
     },
   });
-};
+
+  return {
+    products,
+  };
+}
 
 export default function Inventories() {
+  const loaderData = useLoaderData<typeof loader>();
+  console.log(loaderData);
+
   return (
     <div className={"flex flex-col gap-8"}>
       <section className={"table-container bg-white px-4"}>

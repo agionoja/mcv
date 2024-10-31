@@ -5,7 +5,7 @@ type FetchArgs = {
 };
 
 type FetchReturn<T> = Success<T> | Failure;
-type Failure = {
+export type Failure = {
   error: { statusCode: number; message: string };
   data: null;
 };
@@ -67,4 +67,5 @@ export enum END_POINT {
   FORGOT_PASSWORD = "/auth/forgot-password",
   RESET_PASSWORD = "/auth/reset-password",
   PRODUCT = "/product",
+  PRODUCT_FIND_ALL = "/product/findAll",
 }

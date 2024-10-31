@@ -19,19 +19,23 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async function ({ request }) {
   const formData = await request.formData();
-  const opt = formData.get(RESET_PASSWORD.OTP);
-  const newPassword = formData.get(RESET_PASSWORD.NEW_PASSWORD);
-  const confirmPassword = formData.get(RESET_PASSWORD.CONFIRM_PASSWORD);
+  // const opt = formData.get(RESET_PASSWORD.OTP);
+  // const newPassword = formData.get(RESET_PASSWORD.NEW_PASSWORD);
+  // const confirmPassword = formData.get(RESET_PASSWORD.CONFIRM_PASSWORD);
+  const payload = Object.fromEntries(formData);
+
+  console.log(payload);
 
   const { data, error } = await fetchClient<SuccessResponse<{ data: null }>>({
     endpoint: END_POINT.RESET_PASSWORD,
     init: {
       method: "POST",
-      body: JSON.stringify({ opt, newPassword, confirmPassword }),
+      body: JSON.stringify(payload),
     },
   });
 
   if (error) {
+    console.log(error);
     return redirectWithErrorToast({
       redirectTo: ROUTES.RESET_PASSWORD,
       message: error.message,

@@ -1,4 +1,4 @@
-import { ActionFunction, MetaFunction } from "@remix-run/node";
+import { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { AuthForm } from "~/components/auth-form";
 import { ROUTES } from "~/routes";
 import { redirectWithErrorToast } from "~/toast";
@@ -12,7 +12,7 @@ enum LOGIN {
   REMEMBER = "remember",
 }
 
-export const action: ActionFunction = async function ({ request }) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const password = formData.get(LOGIN.PASSWORD);
   const email = formData.get(LOGIN.EMAIL);
@@ -40,7 +40,7 @@ export const action: ActionFunction = async function ({ request }) {
     message: "Welcome Back!",
     token: data.data.token,
   });
-};
+}
 
 export const meta: MetaFunction = () => {
   return [
@@ -67,8 +67,6 @@ export default function Login() {
             name: LOGIN.EMAIL,
             placeholder: "Enter your email",
             required: true,
-            // pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-            // title: "Please enter a valid email address",
           },
         },
         {
@@ -78,9 +76,6 @@ export default function Login() {
             name: LOGIN.PASSWORD,
             required: true,
             minLength: 6,
-            // pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
-            // title:
-            //   "Password must be at least 8 characters long and include uppercase, lowercase letters, and a number",
           },
         },
         {

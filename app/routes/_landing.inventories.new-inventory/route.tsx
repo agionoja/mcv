@@ -1,46 +1,19 @@
-import { ActionFunction, MetaFunction } from "@remix-run/node";
+import { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { GalleryIcon } from "~/components/icons";
 import { ROUTES } from "~/routes";
 import { Modal } from "~/components/modal";
 import fetchClient, { END_POINT } from "~/fetch-client";
-import { redirectWithErrorToast, redirectWithSuccessToast } from "~/toast";
+import { redirectWithSuccessToast, redirectWithErrorToast } from "~/toast";
 import { SuccessResponse } from "~/dto";
+import { useActionData } from "@remix-run/react";
+import { toast } from "react-toastify";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "New Inventory | MCV" },
     { name: "description", content: "MCV account: New Inventory" },
   ];
-};
-
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const newInventoryData = Object.fromEntries(formData);
-
-  console.log({ newInventoryData });
-  const { error, data } = await fetchClient<SuccessResponse<{ data: null }>>({
-    endpoint: END_POINT.PRODUCT,
-    init: {
-      method: "POST",
-      body: JSON.stringify(newInventoryData),
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    },
-  });
-
-  if (error)
-    return redirectWithErrorToast({
-      redirectTo: ROUTES.NEW_INVENTORY,
-      message: error.message,
-    });
-
-  console.log(data);
-  return redirectWithSuccessToast({
-    redirectTo: ROUTES.INVENTORIES,
-    message: "Product added successfully!",
-  });
 };
 
 enum PRODUCT {
@@ -55,13 +28,39 @@ enum PRODUCT {
   IMAGE = "image",
 }
 
+export async function action({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  // const newInventoryData = Object.fromEntries(formData);
+
+  const { error } = await fetchClient<SuccessResponse<{ data: null }>>({
+    endpoint: END_POINT.PRODUCT,
+    init: {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  });
+
+  if (error)
+    return redirectWithErrorToast({
+      redirectTo: ROUTES.NEW_INVENTORY,
+      message: error.message,
+    });
+
+  return redirectWithSuccessToast({
+    redirectTo: ROUTES.INVENTORIES,
+    message: "Product added successfully!",
+  });
+}
+
 export default function NewInventory() {
   return (
     <>
       <Modal>
         <AddForm
-          showFilePicker={true}
-          formProps={{ method: "POST", encType: "multipart/form-data" }}
+          formProps={{ method: "POST" }}
           addBtnLabel={{
             default: "Add Product",
             submitting: "Adding Product...",
