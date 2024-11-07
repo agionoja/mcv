@@ -4,8 +4,15 @@ import { ROUTES } from "~/routes";
 import { redirectWithErrorToast } from "~/toast";
 import fetchClient, { END_POINT } from "~/fetch-client";
 import { createUserSession } from "~/session";
-import { User } from "~/dto";
 
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 enum LOGIN {
   PASSWORD = "password",
   EMAIL = "email",
@@ -18,7 +25,11 @@ export async function action({ request }: ActionFunctionArgs) {
   const email = formData.get(LOGIN.EMAIL);
   const remember = formData.get(LOGIN.REMEMBER);
 
-  const { data, error } = await fetchClient<User>({
+  const { data: userRes, error } = await fetchClient<{
+    statusCode: number;
+    message: string;
+    data: { user: User; token: string };
+  }>({
     endpoint: END_POINT.LOGIN,
     init: {
       method: "POST",
@@ -37,8 +48,8 @@ export async function action({ request }: ActionFunctionArgs) {
     redirectTo: ROUTES.DASHBOARD,
     remember: remember === "on",
     request,
-    message: "Welcome Back!",
-    token: data.data.token,
+    message: `Welcome Back ${userRes?.data.user.name.split(" ")[0]}`,
+    token: userRes?.data.token,
   });
 }
 

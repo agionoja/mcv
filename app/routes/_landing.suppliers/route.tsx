@@ -16,6 +16,7 @@ export const meta: MetaFunction = () => {
 export default function Suppliers() {
   return (
     <>
+      <Outlet />
       <TableWithPagination
         tHeadCellData={["Supplier Name", "Product", "Contact", "email"]}
         tableBodyData={suppliers.map((supplier) => ({
@@ -30,7 +31,6 @@ export default function Suppliers() {
         tableCaption={"Suppliers"}
         // tableContainer={{ className: "pb-12" }}
       />
-      <Outlet />
     </>
   );
 }

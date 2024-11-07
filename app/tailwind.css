@@ -24,7 +24,7 @@
   }
   h2,
   h3 {
-    @apply text-display-xs text-sub-heading;
+    @apply text-display-xs font-medium text-sub-heading;
   }
 
   input {

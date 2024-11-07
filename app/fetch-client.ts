@@ -14,20 +14,24 @@ type Success<T> = {
   data: T;
 };
 
-const API = "https://apata-inventory.onrender.com";
+export const API = "https://apata-inventory.onrender.com";
 
 export default async function fetchClient<T>({
   endpoint,
   token,
   init,
 }: FetchArgs): Promise<FetchReturn<T>> {
-  // console.log(`${API}${endpoint}`);
+  console.log({
+    headers: {
+      contentType: "application/json",
+    },
+    ...init,
+  });
   try {
     const response = await fetch(`${API}${endpoint}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        ...init?.headers,
       },
       ...init,
     });
@@ -67,5 +71,6 @@ export enum END_POINT {
   FORGOT_PASSWORD = "/auth/forgot-password",
   RESET_PASSWORD = "/auth/reset-password",
   PRODUCT = "/product",
+  PRODUCT_WITH_ID = "/product/:id",
   PRODUCT_FIND_ALL = "/product/findAll",
 }
