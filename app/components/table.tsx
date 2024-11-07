@@ -16,7 +16,7 @@ type TableCaptionProps = {
 };
 
 type TableHeaderProps = {
-  headerRows: TableRowProps[];
+  headerRows?: TableRowProps[];
   tableHeader?: Omit<HTMLAttributes<HTMLTableSectionElement>, "children">;
 };
 
@@ -56,7 +56,8 @@ export function Table({
     <div {...tableContainer} className={`${tableContainer?.className}`}>
       <table className={`${props.className}`} {...props}>
         <TableCaption tableCaption={tableCaption} />
-        <TableHeader headerRows={headerRows} {...tableHeader} />
+        {/* Render TableHeader only if headerRows is defined */}
+        {headerRows && <TableHeader headerRows={headerRows} {...tableHeader} />}
         <TableBody bodyRows={bodyRows} {...tableBody} />
         <TableFooter footerRows={footerRows} {...tableFooter} />
       </table>
@@ -80,12 +81,13 @@ function TableFooter({ footerRows, ...props }: TableFooterProps) {
   ) : null;
 }
 
+// Conditionally render TableHeader only if headerRows is provided
 function TableHeader({ headerRows, ...props }: TableHeaderProps) {
-  return (
+  return headerRows ? (
     <thead {...props}>
       <TableRows tableRows={headerRows} />
     </thead>
-  );
+  ) : null;
 }
 
 function TableCaption({ tableCaption }: TableCaptionProps) {
