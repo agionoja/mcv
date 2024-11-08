@@ -1,9 +1,9 @@
-import { Form, Link, useNavigation } from "@remix-run/react";
+import { Form, FormProps, Link, useNavigation } from "@remix-run/react";
 import { Input, InputProps } from "~/components/Input";
 import { ROUTES } from "~/routes";
 import { LogoIcon } from "~/components/icons";
 
-type AuthFormProps = {
+type AuthFormProps = FormProps & {
   inputLabel?: {
     label: string;
     inputProps: InputProps;
@@ -23,6 +23,7 @@ export function AuthForm({
   message,
   type,
   submitBtn,
+  ...props
 }: AuthFormProps) {
   const navigation = useNavigation();
   const state = navigation.state;
@@ -40,7 +41,7 @@ export function AuthForm({
         </div>
       </div>
 
-      <Form method={"POST"} className={"flex w-full flex-col gap-6"}>
+      <Form method={"POST"} className={"flex w-full flex-col gap-6"} {...props}>
         <ul className={"flex flex-col gap-5"}>
           {inputLabel?.map(({ label, inputProps }) =>
             inputProps.type !== "checkbox" ? (

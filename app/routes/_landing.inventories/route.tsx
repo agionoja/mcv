@@ -1,4 +1,4 @@
-import { data, HeadersFunction, MetaFunction } from "@remix-run/node";
+import { data, MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import TableWithPagination, {
   INDICATION,
@@ -6,11 +6,11 @@ import TableWithPagination, {
 import { ROUTES } from "~/routes";
 import fetchClient, { END_POINT } from "~/fetch-client";
 import { formatDate } from "~/utilities/formatDate";
-import { toast } from "react-toastify";
+import { redirectWithErrorToast } from "~/toast";
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => ({
-  "Cache-Control": loaderHeaders.get("Cache-Control") || "",
-});
+// export const headers: HeadersFunction = ({ loaderHeaders }) => ({
+//   "Cache-Control": loaderHeaders.get("Cache-Control") || "",
+// });
 
 export type Product = {
   id: string;
@@ -36,28 +36,27 @@ export const meta: MetaFunction = () => {
 export async function loader() {
   const { error, data: products } = await fetchClient<Product[]>({
     endpoint: END_POINT.PRODUCT_FIND_ALL,
-    init: {
-      method: "GET",
-    },
   });
 
+  if (error) {
+    return redirectWithErrorToast({
+      redirectTo: ROUTES.INVENTORIES,
+      message: error.message,
+    });
+  }
+
   return data(
-    { products, error },
+    { products },
     {
       headers: {
-        "Cache-Control": "max-age=60",
+        "Cache-Control": "max-age=600",
       },
     },
   );
 }
 
 export default function Inventories() {
-  const { products, error } = useLoaderData<typeof loader>();
-
-  if (!products) {
-    toast(error?.message, { type: "error" });
-    return;
-  }
+  const { products } = useLoaderData<typeof loader>();
 
   return (
     <div className={"flex flex-col gap-8"}>

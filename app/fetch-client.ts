@@ -1,10 +1,14 @@
+import { FormEncType } from "@remix-run/react";
+
 type FetchArgs = {
   endpoint: `${END_POINT}`;
   token?: string;
-  init?: RequestInit & { method: "POST" | "PATCH" | "DELETE" | "GET" };
+  init?: RequestInit & { method: "POST" | "PATCH" | "DELETE" | "GET" } & {
+    headers?: { "Content-Type"?: FormEncType } & Record<string, unknown>;
+  };
 };
 
-type FetchReturn<T> = Success<T> | Failure;
+type FetchClientReturn<T> = Success<T> | Failure;
 export type Failure = {
   error: { statusCode: number; message: string };
   data: null;
@@ -20,18 +24,16 @@ export default async function fetchClient<T>({
   endpoint,
   token,
   init,
-}: FetchArgs): Promise<FetchReturn<T>> {
-  console.log({
-    headers: {
-      contentType: "application/json",
-    },
-    ...init,
-  });
+}: FetchArgs): Promise<FetchClientReturn<T>> {
+  const headers = { ...init?.headers };
+  delete init?.headers;
+
   try {
     const response = await fetch(`${API}${endpoint}`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        ...headers,
       },
       ...init,
     });
