@@ -78,7 +78,7 @@ export const AddForm = forwardRef<HTMLFormElement, Props>(function AddForm(
           </Link>
 
           <button
-            className="rounded-4px bg-primary-cta px-4 py-2.5 text-white"
+            className="btn bg-primary-cta text-white"
             type="submit"
             disabled={state === "submitting"}
           >

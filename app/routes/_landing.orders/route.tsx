@@ -15,7 +15,14 @@ export const meta: MetaFunction = () => {
 export default function Orders() {
   return (
     <>
+      <Outlet />
       <TableWithPagination
+        tableControl={{
+          add: {
+            label: "Add Order",
+            route: "/orders/new-order",
+          },
+        }}
         tableCaption={"Orders"}
         tHeadCellData={[
           "Products",
@@ -45,7 +52,6 @@ export default function Orders() {
           ],
         }))}
       />
-      <Outlet />
     </>
   );
 }

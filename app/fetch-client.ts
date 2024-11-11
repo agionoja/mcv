@@ -8,23 +8,23 @@ type FetchArgs = {
   };
 };
 
-type FetchClientReturn<T> = Success<T> | Failure;
-export type Failure = {
+export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
+export type ApiFailure = {
   error: { statusCode: number; message: string };
   data: null;
 };
-type Success<T> = {
+export type ApiSuccess<T> = {
   error: null;
   data: T;
 };
 
-export const API = "https://apata-inventory.onrender.com";
+export const API = "https://mcv-server.onrender.com";
 
 export default async function fetchClient<T>({
   endpoint,
   token,
   init,
-}: FetchArgs): Promise<FetchClientReturn<T>> {
+}: FetchArgs): Promise<ApiResult<T>> {
   const headers = { ...init?.headers };
   delete init?.headers;
 
@@ -75,4 +75,7 @@ export enum END_POINT {
   PRODUCT = "/product",
   PRODUCT_WITH_ID = "/product/:id",
   PRODUCT_FIND_ALL = "/product/findAll",
+  SUPPLIER_All = "/supplier/findAll",
+  SUPPLIER = "/supplier",
+  DASHBOARD = "/dashboard",
 }

@@ -35,7 +35,7 @@ export default function NewOder() {
         formProps={{ method: "POST", encType: "multipart/form-data" }}
         addBtnLabel={{ default: "Add Order", submitting: "Adding Order..." }}
         formLabel={"New Order"}
-        cancelRoute={ROUTES.INVENTORIES}
+        cancelRoute={ROUTES.ORDERS}
         control={[
           {
             label: "Product Name",

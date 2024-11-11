@@ -33,7 +33,7 @@ export async function action({ request }: ActionFunctionArgs) {
   formData.delete(PRODUCT.EXPIRY_DATE);
   formData.append(PRODUCT.EXPIRY_DATE, new Date(String(date)).toISOString());
 
-  const { error, data: product } = await fetchClient<Product>({
+  const { error } = await fetchClient<Product>({
     endpoint: END_POINT.PRODUCT,
     init: {
       method: "POST",
@@ -47,7 +47,6 @@ export async function action({ request }: ActionFunctionArgs) {
       message: error.message,
     });
 
-  console.log(product);
   return redirectWithSuccessToast({
     redirectTo: ROUTES.INVENTORIES,
     message: "Product added successfully!",
