@@ -53,7 +53,11 @@ export function Table({
   ...props
 }: TableProps) {
   return (
-    <div {...tableContainer} className={`${tableContainer?.className}`}>
+    <div
+      {...tableContainer}
+      className={`relative ${tableContainer?.className}`}
+    >
+      {tableContainer?.children}
       <table className={`${props.className}`} {...props}>
         <TableCaption tableCaption={tableCaption} />
         {/* Render TableHeader only if headerRows is defined */}

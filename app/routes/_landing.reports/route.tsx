@@ -3,6 +3,7 @@ import TableWithPagination, {
   INDICATION,
 } from "~/components/table-with-pagination";
 import { bestSellingProducts } from "~/mock";
+import { ROUTES } from "~/routes";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,6 +16,12 @@ export default function Reports() {
   return (
     <>
       <TableWithPagination
+        tableControl={{
+          add: {
+            label: "Add Supplier",
+            route: "/orders/new-order",
+          },
+        }}
         tHeadCellData={[
           "Product",
           "Product ID",
@@ -24,6 +31,7 @@ export default function Reports() {
           "Increased By",
         ]}
         tableBodyData={bestSellingProducts.map((product) => ({
+          rowUrl: ROUTES.INVENTORY.replace(":id", product.productId.toString()),
           rowCells: [
             { isHeader: true, data: product.product },
             { data: product.productId.toString() },

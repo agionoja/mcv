@@ -9,7 +9,10 @@ import { ROUTES } from "~/routes";
 export const loader: LoaderFunction = async function ({ request }) {
   return (await userHasSession({ headers: request.headers }))
     ? null
-    : redirectWithErrorToast({ redirectTo: ROUTES.LOGIN, message: "Login" });
+    : redirectWithErrorToast({
+        redirectTo: ROUTES.LOGIN,
+        message: "Login to gain access",
+      });
 };
 
 export default function Landing() {
@@ -19,8 +22,7 @@ export default function Landing() {
 
       <div className="flex w-[86.11%] flex-col overflow-hidden 2xl:w-[80%]">
         <TopBar />
-
-        <div className="w-full flex-1 overflow-y-auto px-8 py-7">
+        <div className="relative w-full flex-1 overflow-y-auto px-8 py-7">
           <Outlet />
         </div>
       </div>

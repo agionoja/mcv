@@ -1,5 +1,6 @@
 import { Table, TableProps } from "~/components/table";
-import { useNavigate } from "@remix-run/react";
+import { Link, useNavigate } from "@remix-run/react";
+import { ROUTES } from "~/routes";
 
 type Row = {
   rowUrl: string;
@@ -18,11 +19,19 @@ export enum INDICATION {
   NULL = "null",
 }
 
+type TableControl = {
+  add: {
+    route: `${ROUTES}`;
+    label: string;
+  };
+};
+
 type GeneralTableProps = {
   tHeadCellData: string[];
   tableBodyData: Row[];
   tableFooterData?: Row[];
   tableCaption?: string;
+  tableControl: TableControl;
 } & Pick<TableProps, "tableContainer">;
 
 export default function TableWithPagination({
@@ -31,6 +40,7 @@ export default function TableWithPagination({
   tableCaption,
   tableBodyData,
   tableContainer,
+  tableControl,
 }: GeneralTableProps) {
   const navigate = useNavigate();
   const indicationStyles = (indication?: INDICATION) =>
@@ -52,6 +62,18 @@ export default function TableWithPagination({
       tableContainer={{
         ...tableContainer,
         className: `rounded-lg pb-3.5 pt-5 bg-white overflow-x-auto ${tableContainer?.className}`,
+        children: (
+          <>
+            <div className={"absolute right-4 top-10"}>
+              <Link
+                to={tableControl.add.route}
+                className={"btn bg-primary-cta text-white"}
+              >
+                {tableControl.add.label}
+              </Link>
+            </div>
+          </>
+        ),
       }}
       tableCaption={{
         className: `text-left text-lg font-medium text-heading ${cellStyles}`,

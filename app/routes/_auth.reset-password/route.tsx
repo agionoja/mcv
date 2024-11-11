@@ -19,18 +19,15 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async function ({ request }) {
   const formData = await request.formData();
-  // const opt = formData.get(RESET_PASSWORD.OTP);
-  // const newPassword = formData.get(RESET_PASSWORD.NEW_PASSWORD);
-  // const confirmPassword = formData.get(RESET_PASSWORD.CONFIRM_PASSWORD);
-  const payload = Object.fromEntries(formData);
-
-  console.log(payload);
 
   const { data, error } = await fetchClient<SuccessResponse<{ data: null }>>({
     endpoint: END_POINT.RESET_PASSWORD,
     init: {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: JSON.stringify(Object.fromEntries(formData)),
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
   });
 
@@ -73,7 +70,7 @@ export default function ResetPassword() {
         {
           label: "Confirm Password",
           inputProps: {
-            type: "text",
+            type: "password",
             name: RESET_PASSWORD.NEW_PASSWORD,
             required: true,
             placeholder: "Confirm your new password",

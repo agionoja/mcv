@@ -3,6 +3,8 @@ import { Modal } from "~/components/modal";
 import { AddForm } from "~/components/add-form";
 import { ROUTES } from "~/routes";
 
+import { useRevalidator } from "@remix-run/react";
+
 enum STORE {
   NAME = "name",
   LOCATION = "location",
@@ -30,7 +32,6 @@ export default function NewStore() {
         formProps={{ encType: "application/x-www-form-urlencoded" }}
         addBtnLabel={{ default: "Add Store", submitting: "Adding Store.." }}
         cancelRoute={ROUTES.MANAGE_STORE}
-        showFilePicker={true}
         filePickerProps={{ fileTypes: ["image/*"] }}
         control={[
           {

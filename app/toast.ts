@@ -2,6 +2,7 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import { cookieDefaultOptions } from "~/cookies";
 import type { TypeOptions } from "react-toastify";
 import { z } from "zod";
+import { ROUTES } from "~/routes";
 
 // Define schemas
 const toastMessageSchema = z.object({
@@ -19,7 +20,7 @@ type ToastMessage = z.infer<typeof toastMessageSchema>;
 
 // Common type for redirect functions
 type RedirectArgs = {
-  redirectTo: string;
+  redirectTo: `${ROUTES}`;
   init?: ResponseInit;
 };
 

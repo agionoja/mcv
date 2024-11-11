@@ -1,37 +1,39 @@
+import { FormEncType } from "@remix-run/react";
+
 type FetchArgs = {
   endpoint: `${END_POINT}`;
   token?: string;
-  init?: RequestInit & { method: "POST" | "PATCH" | "DELETE" | "GET" };
+  init?: RequestInit & { method: "POST" | "PATCH" | "DELETE" | "GET" } & {
+    headers?: { "Content-Type"?: FormEncType } & Record<string, unknown>;
+  };
 };
 
-type FetchReturn<T> = Success<T> | Failure;
-export type Failure = {
+export type ApiResult<T> = ApiSuccess<T> | ApiFailure;
+export type ApiFailure = {
   error: { statusCode: number; message: string };
   data: null;
 };
-type Success<T> = {
+export type ApiSuccess<T> = {
   error: null;
   data: T;
 };
 
-export const API = "https://apata-inventory.onrender.com";
+export const API = "https://mcv-server.onrender.com";
 
 export default async function fetchClient<T>({
   endpoint,
   token,
   init,
-}: FetchArgs): Promise<FetchReturn<T>> {
-  console.log({
-    headers: {
-      contentType: "application/json",
-    },
-    ...init,
-  });
+}: FetchArgs): Promise<ApiResult<T>> {
+  const headers = { ...init?.headers };
+  delete init?.headers;
+
   try {
     const response = await fetch(`${API}${endpoint}`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        ...headers,
       },
       ...init,
     });
@@ -73,4 +75,7 @@ export enum END_POINT {
   PRODUCT = "/product",
   PRODUCT_WITH_ID = "/product/:id",
   PRODUCT_FIND_ALL = "/product/findAll",
+  SUPPLIER_All = "/supplier/findAll",
+  SUPPLIER = "/supplier",
+  DASHBOARD = "/dashboard",
 }

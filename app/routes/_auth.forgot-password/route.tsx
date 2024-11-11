@@ -18,6 +18,9 @@ export const action: ActionFunction = async function ({ request }) {
     init: {
       method: "POST",
       body: JSON.stringify({ email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
   });
 
@@ -25,9 +28,6 @@ export const action: ActionFunction = async function ({ request }) {
     return redirectWithErrorToast({
       redirectTo: ROUTES.FORGOT_PASSWORD,
       message: error.message,
-      init: {
-        status: error.statusCode,
-      },
     });
   }
 

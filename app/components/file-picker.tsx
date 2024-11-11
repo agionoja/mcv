@@ -15,6 +15,7 @@ type Position = "left" | "center" | "right";
 
 export type FilePickerProps = {
   icon?: React.FC<IconProps> | string;
+  previewDefault?: string; // Default preview URL
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   onGetPreviewUrls?: (urls: string[] | []) => void;
   clearPreview?: boolean;
@@ -26,6 +27,7 @@ export type FilePickerProps = {
 
 export function FilePicker({
   icon: Icon = GalleryIcon,
+  previewDefault, // Added here
   onGetPreviewUrls,
   fileTypes,
   maxSize = { mb: 1 },
@@ -120,6 +122,10 @@ export function FilePicker({
     }
   };
 
+  const previewImageSrc = files.length
+    ? URL.createObjectURL(files[0]) // Use selected file if available
+    : previewDefault; // Fallback to previewDefault if no file is selected
+
   return (
     <>
       <label
@@ -131,13 +137,13 @@ export function FilePicker({
           isDragging ? "border-primary-cta" : "border-gray-300"
         } ${position === "left" ? "mr-auto" : position === "right" ? "ml-auto" : "mx-auto"}`}
       >
-        {files.length ? (
+        {previewImageSrc ? (
           <img
-            src={URL.createObjectURL(files[0])}
+            src={previewImageSrc}
             width={48}
             height={48}
             className={"h-12 w-12"}
-            alt={files[0].name}
+            alt={"Preview"}
           />
         ) : typeof Icon === "string" ? (
           <img src={Icon} width={58} height={58} alt="icon" />

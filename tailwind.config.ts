@@ -54,6 +54,15 @@ export default {
       padding: {
         "4.5": "1.125rem",
       },
+
+      // keyframes: {
+      //   spin: {
+      //     to: { transform: "rotate(360deg)" },
+      //   },
+      // },
+      // animation: {
+      //   spinner: "spinner 1s linear infinite",
+      // },
     },
   },
   plugins: [],

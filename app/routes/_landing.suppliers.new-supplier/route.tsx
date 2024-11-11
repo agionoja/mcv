@@ -1,19 +1,33 @@
-import { ActionFunction, json, MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { AddForm } from "~/components/add-form";
 import { UserIcon } from "~/components/icons";
 import { ROUTES } from "~/routes";
 import { Modal } from "~/components/modal";
+import fetchClient, { END_POINT } from "~/fetch-client";
+import { redirectWithErrorToast, redirectWithSuccessToast } from "~/toast";
 
 enum SUPPLIER {
-  NAME = "name",
-  PRODUCT = "product",
-  CATEGORY = "category",
-  BUYING_PRICE = "buyingPrice",
-  CONTACT_NUMBER = "contactNumber",
-  TAKING_RETURNS = "takingReturnsTurns",
-  NOT_TAKING_RETURNS = "notTakingReTurns",
-  PHOTO = "photo",
+  NAME = "Supplier_name",
+  PRODUCT = "Product",
+  CATEGORY = "Category",
+  BUYING_PRICE = "Buying_Price",
+  CONTACT_NUMBER = "Contact_Number",
+  TAKING_RETURNS = "TAKING_RETURN",
+  NOT_TAKING_RETURNS = "NOT_TAKING_RETURN",
+  PHOTO = "Photo",
 }
+
+export type Supplier = {
+  id: string;
+  Supplier_name: string;
+  Contact_Number: string;
+  productId?: string;
+  Photo: string;
+  Buying_Price: number;
+  Type: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,11 +38,26 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const supplierData = Object.fromEntries(formData);
 
-  // console.log(supplierData);
+  const { error } = await fetchClient({
+    endpoint: END_POINT.SUPPLIER,
+    init: {
+      method: "POST",
+      body: formData,
+    },
+  });
 
-  return json({ supplierData });
+  if (error) {
+    return redirectWithErrorToast({
+      redirectTo: ROUTES.NEW_SUPPLIER,
+      message: error.message,
+    });
+  }
+
+  return redirectWithSuccessToast({
+    message: "Supplier added successfully",
+    redirectTo: ROUTES.SUPPLIERS,
+  });
 };
 
 export default function AddSuppliers() {
@@ -42,7 +71,6 @@ export default function AddSuppliers() {
         }}
         formLabel={"New Supplier"}
         cancelRoute={ROUTES.SUPPLIERS}
-        showFilePicker={true}
         control={[
           {
             label: "Supplier Name",
@@ -53,25 +81,25 @@ export default function AddSuppliers() {
               placeholder: "Enter supplier name",
             },
           },
-          {
-            label: "Product Name",
-            type: "input",
-            inputProps: {
-              type: "text",
-              name: SUPPLIER.PRODUCT,
-              placeholder: "Enter product name",
-            },
-          },
-          {
-            label: "Category",
-            type: "select",
-            required: true,
-            name: SUPPLIER.CATEGORY,
-            options: [
-              { value: "newOder", label: "New Order" },
-              { value: "oldOder", label: "Old Order" },
-            ],
-          },
+          // {
+          //   label: "Product Name",
+          //   type: "input",
+          //   inputProps: {
+          //     type: "text",
+          //     name: SUPPLIER.PRODUCT,
+          //     placeholder: "Enter product name",
+          //   },
+          // },
+          // {
+          //   label: "Category",
+          //   type: "select",
+          //   required: true,
+          //   name: SUPPLIER.CATEGORY,
+          //   options: [
+          //     { value: "newOder", label: "New Order" },
+          //     { value: "oldOder", label: "Old Order" },
+          //   ],
+          // },
           {
             label: "Buying Price",
             type: "input",
@@ -92,21 +120,13 @@ export default function AddSuppliers() {
           },
           {
             label: "Type",
-            type: "input",
-            inputProps: {
-              type: "text",
-              name: SUPPLIER.TAKING_RETURNS,
-              placeholder: "Not taking return",
-            },
-          },
-          {
-            label: "",
-            type: "input",
-            inputProps: {
-              type: "text",
-              name: SUPPLIER.NOT_TAKING_RETURNS,
-              placeholder: "Taking return",
-            },
+            type: "select",
+            required: true,
+            name: "Type",
+            options: [
+              { value: SUPPLIER.TAKING_RETURNS, label: "Taking turns" },
+              { value: SUPPLIER.NOT_TAKING_RETURNS, label: "Not taking turns" },
+            ],
           },
         ]}
         filePickerProps={{

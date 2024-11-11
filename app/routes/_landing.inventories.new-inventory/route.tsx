@@ -5,9 +5,7 @@ import { Modal } from "~/components/modal";
 import fetchClient, { END_POINT } from "~/fetch-client";
 import { redirectWithErrorToast, redirectWithSuccessToast } from "~/toast";
 import { Product } from "~/routes/_landing.inventories/route";
-import axios, { AxiosError } from "axios";
 import { GalleryIcon } from "~/components/icons";
-// import { GalleryIcon } from "~/components/icons";
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,41 +29,15 @@ export enum PRODUCT {
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
 
-  // try {
-  //   const res = await axios.post(
-  //     "https://apata-inventory.onrender.com/product",
-  //     formData,
-  //   );
-  //   console.log(res);
-  // } catch (e) {
-  //   const error = e as AxiosError;
-  //   console.log(error);
-  //   return null;
-  // }
+  const date = formData.get(PRODUCT.EXPIRY_DATE);
+  formData.delete(PRODUCT.EXPIRY_DATE);
+  formData.append(PRODUCT.EXPIRY_DATE, new Date(String(date)).toISOString());
 
-  const headers = {
-    // "Content-Length": request.headers.get("content-length"),
-    "Content-Type":
-      request.headers.get("content-type") || "multipart/form-data",
-    Accept: "*/*",
-    // Accept: request.headers.get("accept"),
-    // "Accept-Encoding": request.headers.get("accept-encoding"),
-  };
-
-  const image = formData.get("Image") as File;
-
-  console.log(image.type, image.lastModified);
-
-  // console.log(request.headers);
-
-  const { error, data: product } = await fetchClient<Product>({
+  const { error } = await fetchClient<Product>({
     endpoint: END_POINT.PRODUCT,
     init: {
       method: "POST",
       body: formData,
-      headers: {
-        ...headers,
-      },
     },
   });
 
@@ -75,7 +47,6 @@ export async function action({ request }: ActionFunctionArgs) {
       message: error.message,
     });
 
-  console.log(product);
   return redirectWithSuccessToast({
     redirectTo: ROUTES.INVENTORIES,
     message: "Product added successfully!",
@@ -179,7 +150,6 @@ export default function NewInventory() {
             inputProps: {
               name: PRODUCT.IMAGE,
               "aria-label": "Add product image",
-              required: true,
             },
           }}
         ></AddForm>

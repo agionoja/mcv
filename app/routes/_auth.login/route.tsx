@@ -1,9 +1,11 @@
 import { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { AuthForm } from "~/components/auth-form";
 import { ROUTES } from "~/routes";
-import { redirectWithErrorToast } from "~/toast";
 import fetchClient, { END_POINT } from "~/fetch-client";
 import { createUserSession } from "~/session";
+import { useEffect, useRef } from "react";
+import { useActionData } from "@remix-run/react";
+import { toast } from "react-toastify";
 
 export type User = {
   id: string;
@@ -34,14 +36,14 @@ export async function action({ request }: ActionFunctionArgs) {
     init: {
       method: "POST",
       body: JSON.stringify({ password, email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
   });
 
   if (error) {
-    return redirectWithErrorToast({
-      redirectTo: ROUTES.LOGIN,
-      message: error.message,
-    });
+    return { error };
   }
 
   return createUserSession({
@@ -61,6 +63,18 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Login() {
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const actionData = useActionData<typeof action>();
+  const error =
+    actionData && "error" in actionData ? actionData.error : undefined;
+
+  useEffect(() => {
+    if (emailRef.current && error) {
+      toast(error.message, { type: "error" });
+      emailRef.current.select();
+    }
+  }, [error]);
+
   return (
     <AuthForm
       type={"login"}
@@ -75,6 +89,7 @@ export default function Login() {
           label: "email",
           inputProps: {
             type: "email",
+            ref: emailRef,
             name: LOGIN.EMAIL,
             placeholder: "Enter your email",
             required: true,
