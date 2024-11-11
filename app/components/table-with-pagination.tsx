@@ -53,15 +53,13 @@ export default function TableWithPagination({
             ? "text-neutral-clr"
             : ""
     }`;
-  const cellStyles = "px-4 py-3.5 text-left";
-  const cellBorder = "border-b border-border-color";
 
   return (
     <Table
       className={"w-full table-fixed"}
       tableContainer={{
         ...tableContainer,
-        className: `rounded-lg pb-3.5 pt-5 bg-white overflow-x-auto ${tableContainer?.className}`,
+        className: `_table-container ${tableContainer?.className}`,
         children: (
           <>
             <div className={"absolute right-4 top-10"}>
@@ -76,7 +74,7 @@ export default function TableWithPagination({
         ),
       }}
       tableCaption={{
-        className: `text-left text-lg font-medium text-heading ${cellStyles}`,
+        className: `_table-caption _table-cell`,
         children: tableCaption,
       }}
       headerRows={[
@@ -85,7 +83,7 @@ export default function TableWithPagination({
           tableCells: tHeadCellData.map((th) => ({
             isHeader: true,
             children: th,
-            className: `${cellStyles} ${cellBorder}`,
+            className: "_table-cell _table-cell__border",
           })),
         },
       ]}
@@ -97,8 +95,8 @@ export default function TableWithPagination({
             isHeader: isHeader,
             children: data,
             // Only add the border if the current row is NOT the last row
-            className: `${cellStyles} ${indicationStyles(indication)} ${
-              rowIndex < tableBodyData.length - 1 ? cellBorder : ""
+            className: `_table-cell ${indicationStyles(indication)} ${
+              rowIndex < tableBodyData.length - 1 ? "_table-cell" : ""
             }`,
           }),
         ),
@@ -110,8 +108,10 @@ export default function TableWithPagination({
                 isHeader: isHeader,
                 children: data,
                 // Only add the border if the current row is NOT the last row
-                className: `${cellStyles} ${indicationStyles(indication)} ${
-                  rowIndex < tableFooterData.length - 1 ? cellBorder : ""
+                className: `_table-cell ${indicationStyles(indication)} ${
+                  rowIndex < tableFooterData.length - 1
+                    ? "_table-cell__border"
+                    : ""
                 }`,
               })),
             }))
