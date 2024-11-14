@@ -2,7 +2,6 @@ import type { MetaFunction } from "@remix-run/node";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import fetchClient, { END_POINT } from "~/fetch-client";
 import { getUserToken } from "~/session";
-import { HTMLAttributes } from "react";
 import {
   CancelIcon,
   CategoriesIcon,
@@ -28,6 +27,7 @@ import {
 } from "~/utilities/transform";
 import { OrderSummaryChart } from "~/routes/_landing.dashboard/order-summary";
 import { SalesPurchaseChart } from "~/routes/_landing.dashboard/sale-purchse-chart";
+import { LowQualityStock } from "~/routes/_landing.dashboard/lowQualityStock";
 
 export const meta: MetaFunction = () => {
   return [
@@ -246,7 +246,7 @@ export default function Dashboard() {
         />
       </div>
 
-      <div>
+      <div className={"grid grid-cols-12 gap-7"}>
         <Table
           className={"w-full table-fixed"}
           tableContainer={{ className: "_table-container col-span-7" }}
@@ -301,41 +301,12 @@ export default function Dashboard() {
             className: "_table-caption _table-cell",
           }}
         />
+
+        <LowQualityStock
+          className={"col-span-5"}
+          products={Low_Quantity_Stock}
+        />
       </div>
-    </div>
-  );
-}
-
-export function LowQualityStock({ products }: { products: Product[] }) {
-  return (
-    <>
-      <Container>
-        <h2>Low Quality Stock</h2>
-        <ul>
-          {products.map((product, index) => (
-            <li key={index}>
-              <img src={product.Image} alt={product.Product_name} />
-              <div>
-                <h3>Tata Salt</h3>
-                Remaining Quantity: {product.Quantity} Packet
-              </div>
-              <span>Low</span>
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </>
-  );
-}
-
-export function Container({
-  children,
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div className={`bg-white p-6 ${className}`} {...props}>
-      {children}
     </div>
   );
 }

@@ -8,6 +8,7 @@ export enum ROUTES {
   DASHBOARD_BEST_SELLING_PRODUCT = "/dashboard/best-selling-product",
   PRODUCT_INFO = "/product-info",
   REPORTS = "/reports",
+  USERS = "/users",
   SUPPLIERS = "/suppliers",
   SUPPLIER = "/suppliers/:id",
   NEW_SUPPLIER = "/suppliers/new-supplier",

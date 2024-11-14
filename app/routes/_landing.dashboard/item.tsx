@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from "react";
 import { IconProps } from "~/components/icons";
 
 export interface ItemProps {
-  amount: number;
+  amount: number | string;
   label: string;
   Icon: React.ElementType<IconProps>;
   lastIndex?: boolean;
