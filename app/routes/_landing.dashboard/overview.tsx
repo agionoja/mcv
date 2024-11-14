@@ -3,7 +3,7 @@ import React, { HTMLAttributes } from "react";
 import { Item, ItemProps } from "~/routes/_landing.dashboard/item";
 
 type Props = {
-  data: { amount: number; label: string; Icon: React.FC }[];
+  data: { amount: number | string; label: string; Icon: React.FC }[];
   label: string;
   containerProps?: HTMLAttributes<HTMLDivElement>;
 } & Pick<ItemProps, "statsContainer">;

@@ -96,7 +96,7 @@ export default function TableWithPagination({
             children: data,
             // Only add the border if the current row is NOT the last row
             className: `_table-cell ${indicationStyles(indication)} ${
-              rowIndex < tableBodyData.length - 1 ? "_table-cell" : ""
+              rowIndex < tableBodyData.length - 1 ? "_table-cell__border" : ""
             }`,
           }),
         ),
