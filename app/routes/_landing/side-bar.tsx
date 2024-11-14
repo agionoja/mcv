@@ -41,6 +41,7 @@ export function SideBar() {
               {RenderNavLink(ROUTES.REPORTS, "Reports", ReportIcon, "stroke")}
             </li>
             <li>{RenderNavLink(ROUTES.SUPPLIERS, "Suppliers", UserIcon)}</li>
+            <li>{RenderNavLink(ROUTES.USERS, "Users", UserIcon)}</li>
             <li>{RenderNavLink(ROUTES.ORDERS, "Orders", OrderIcon)}</li>
             <li>
               {RenderNavLink(
@@ -76,7 +77,7 @@ function RenderNavLink(
         {...{
           [activeStyleProp]: location.pathname.includes(to)
             ? primaryCta
-            : undefined,
+            : "#858D9D",
         }}
       />
       <span>{label}</span>
@@ -87,7 +88,7 @@ function RenderNavLink(
         {...{
           [activeStyleProp]: location.pathname.includes(to)
             ? primaryCta
-            : undefined,
+            : "#858D9D",
         }}
       />
       <span>{label}</span>

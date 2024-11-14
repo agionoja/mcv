@@ -1,6 +1,6 @@
-import { Container } from "~/routes/_landing.dashboard/route";
 import React, { HTMLAttributes } from "react";
 import { Item, ItemProps } from "~/routes/_landing.dashboard/item";
+import { Container } from "./container";
 
 type Props = {
   data: { amount: number | string; label: string; Icon: React.FC }[];
@@ -15,10 +15,7 @@ export const Overview = ({
   statsContainer,
 }: Props) => {
   return (
-    <Container
-      className={`flex flex-col gap-8 rounded-lg ${className}`}
-      {...rest}
-    >
+    <Container className={`rounded-lg ${className}`} {...rest}>
       <h2>{label}</h2>
       <ul className="flex justify-between gap-8">
         {data.map((item, index) => (
