@@ -1,11 +1,12 @@
 import { createCookieSessionStorage } from "@remix-run/node";
 import { cookieDefaultOptions } from "~/cookies";
 import { redirectWithSuccessToast } from "~/toast";
+import { ROUTES } from "~/routes";
 
 type UserSession = {
   remember?: boolean;
   token: string;
-  redirectTo: string;
+  redirectTo: `${ROUTES}`;
   request: Request;
   message: string;
   init?: ResponseInit;
