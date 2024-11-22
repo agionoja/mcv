@@ -9,6 +9,7 @@ export enum ROUTES {
   PRODUCT_INFO = "/product-info",
   REPORTS = "/reports",
   USERS = "/users",
+  ADD_USER = "/users/add-user",
   SUPPLIERS = "/suppliers",
   SUPPLIER = "/suppliers/:id",
   NEW_SUPPLIER = "/suppliers/new-supplier",
