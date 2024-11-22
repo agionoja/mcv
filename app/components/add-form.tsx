@@ -1,4 +1,3 @@
-import { v4 } from "uuid";
 import { Form, FormProps, Link, useNavigation } from "@remix-run/react";
 import React, { forwardRef } from "react";
 import { FilePicker, FilePickerProps } from "~/components/file-picker";
@@ -12,6 +11,7 @@ type InputLabel = {
   label: string;
   inputProps?: InputProps;
   type: "input";
+  className?: string;
 };
 
 interface SelectProps extends ReactSelectProps {
@@ -57,7 +57,9 @@ export const AddForm = forwardRef<HTMLFormElement, Props>(function AddForm(
         <ul className="flex flex-col gap-4">
           {control.map((el, index) => (
             <li key={index}>
-              <label className="flex justify-between gap-2 text-md font-medium">
+              <label
+                className={`flex justify-between gap-2 text-md font-medium ${el.className}`}
+              >
                 <span>{el.label}</span>
                 {el.type === "input" ? (
                   <Input required {...el.inputProps} />

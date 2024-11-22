@@ -70,6 +70,7 @@ export default async function fetchClient<T>({
 // Enum for predefined endpoints
 export enum END_POINT {
   LOGIN = "/auth/login",
+  SIGN_UP = "/auth/signUp",
   FORGOT_PASSWORD = "/auth/forgot-password",
   RESET_PASSWORD = "/auth/reset-password",
   PRODUCT = "/product",

@@ -52,9 +52,9 @@ export const clientLoader = (args: ClientLoaderFunctionArgs) =>
 
 clientLoader.hydrate = true;
 
-export function HydrateFallback() {
-  return <Spinner borderColor={"rgba(21,112,239,0.2)"} borderWidth={4} />;
-}
+// export function HydrateFallback() {
+//   return <Spinner borderColor={"rgba(21,112,239,0.2)"} borderWidth={4} />;
+// }
 
 export default function Inventories() {
   const { products } = useCachedLoaderData<typeof loader>();
@@ -62,9 +62,9 @@ export default function Inventories() {
   return (
     <div className={"flex flex-col gap-8"}>
       <Outlet />
-      <section className={"table-container bg-white px-4"}>
-        <h2 className={"text-heading"}>Overall Inventory</h2>
-      </section>
+      {/*<section className={"table-container bg-white px-4"}>*/}
+      {/*  <h2 className={"text-heading"}>Overall Inventory</h2>*/}
+      {/*</section>*/}
 
       {products?.length ? (
         <TableWithPagination
