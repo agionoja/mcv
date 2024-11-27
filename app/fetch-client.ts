@@ -3,7 +3,7 @@ import { FormEncType } from "@remix-run/react";
 type FetchArgs = {
   endpoint: `${END_POINT}`;
   token?: string;
-  init?: RequestInit & { method: "POST" | "PATCH" | "DELETE" | "GET" } & {
+  init?: RequestInit & { method?: "POST" | "PATCH" | "DELETE" | "GET" } & {
     headers?: { "Content-Type"?: FormEncType } & Record<string, unknown>;
   };
 };
@@ -79,4 +79,5 @@ export enum END_POINT {
   SUPPLIER_All = "/supplier/findAll",
   SUPPLIER = "/supplier",
   DASHBOARD = "/dashboard",
+  STORE = "/store",
 }
